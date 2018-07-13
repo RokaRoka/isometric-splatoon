@@ -1,10 +1,15 @@
 extends KinematicBody2D
 
 #exports
-export (int) var speed = 10
+export (int) var walkSpeed = 0
+export (float) var walkMaxSpeed = 0
+export (float) var swimMaxSpeed = 0
 
 #controller vals
-var deadZone  = 0.2
+export (bool) var keyboardControl = false
+var deadZone  = 0.15
+
+#movement
 var velocity  = Vector2()
 var playerNum = 0
 
@@ -30,33 +35,91 @@ func joy_con_changed(deviceid, isConnected):
 # Called every frame. Delta is time since last frame.
 # Update game logic here.
 func _physics_process(delta):
-	ControllerMovement()
-	move_and_collide(velocity)
-
+	var dir = GetInput()
+	HandleVelocity(dir)
+	move_and_collide(velocity * delta)
 
 #joystick movement
-func ControllerMovement(): 
-	velocity = Vector2()
+func GetInput():
+	var xAxis = 0
+	var yAxis = 0
+	
 	if Input.get_connected_joypads().size() > 0:
-		var xAxis = Input.get_joy_axis(playerNum, JOY_AXIS_0)
-		var yAxis = Input.get_joy_axis(playerNum, JOY_AXIS_1)
-		if abs(xAxis) > deadZone:
-			if xAxis < 0:
-				velocity.x = xAxis
-				#animPlayer.play( "move_left" )
-			if xAxis > 0:
-				velocity.x = xAxis
-				#animPlayer.play( "move_right" )
-		if abs(yAxis) > deadZone:
-			if yAxis < 0:
-				velocity.y = yAxis
-				if not animPlayer.current_animation == "move_up":
-					animPlayer.play( "move_up" )
-			if yAxis > 0:
-				velocity.y = yAxis
-				if not animPlayer.current_animation == "move_down":
-					animPlayer.play( "move_down" )
-	else:
-		animPlayer.stop()
+		xAxis = Input.get_joy_axis(playerNum, JOY_AXIS_0)
+		yAxis = Input.get_joy_axis(playerNum, JOY_AXIS_1)
+	
+	if keyboardControl:
+		if Input.is_action_pressed("move_down"):
+			yAxis = 1
+		if Input.is_action_pressed("move_up"):
+			yAxis = -1
+		if Input.is_action_pressed("move_right"):
+			xAxis = 1
+		if Input.is_action_pressed("move_left"):
+			xAxis = -1
+	
+	var axisTotal = Vector2(xAxis, yAxis)
+	if axisTotal.length() > 1 or axisTotal.length() < -1:
+		axisTotal = axisTotal.normalized()
+	
+	return axisTotal
 
-	velocity = velocity.normalized() * speed
+
+func HandleVelocity(dir):
+	#set speed and max speed
+	var speed = walkSpeed
+	var maxSpeed = walkMaxSpeed
+	
+	var deceleration = Vector2()
+	var acceleration = Vector2()
+	var newVelocity = velocity
+	
+	#for x decel
+	if dir.x == 0:
+		#find the direction
+		if velocity.x > 0:
+			newVelocity.x = max(0, velocity.x - speed)
+		elif velocity.x < 0:
+			newVelocity.x = min(0, velocity.x + speed)
+	#for x accel
+	else:
+		newVelocity.x += dir.x * speed
+	
+	#for y decel
+	if dir.y == 0:
+		pass#find the direction
+		if velocity.y > 0:
+			newVelocity.y = max(0, velocity.y - speed)
+		elif velocity.y < 0:
+			newVelocity.y = min(0, velocity.y + speed)
+	#for x accel
+	else:
+		newVelocity.y += dir.y * speed
+	
+	#cap the velocity if it reaches the max
+	if newVelocity.length_squared() > pow(maxSpeed, 2):
+		velocity = newVelocity.normalized() * maxSpeed
+	else:
+		velocity = newVelocity
+	
+	HandleAnimation()
+
+
+func HandleAnimation():
+	if abs(velocity.x) > abs(velocity.y):
+		if velocity.x > 0:
+			if animPlayer.current_animation != "move_right":
+				animPlayer.play( "move_right" )
+		else:
+			if animPlayer.current_animation != "move_left":
+				animPlayer.play( "move_left" )
+	else:
+		if velocity.y > 0:
+			if animPlayer.current_animation != "move_down":
+				animPlayer.play( "move_down" )
+		else:
+			if animPlayer.current_animation != "move_up":
+				animPlayer.play( "move_up" )
+	
+	if velocity.length_squared() < 0.05:
+		animPlayer.stop()
