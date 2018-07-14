@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player/PlayerMovement.gd" type="Script" id=1]
 [ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=2]
@@ -6,23 +6,25 @@
 [ext_resource path="res://Player/Temp/Animations/move_left.anim" type="Animation" id=4]
 [ext_resource path="res://Player/Temp/Animations/move_right.anim" type="Animation" id=5]
 [ext_resource path="res://Player/Temp/Animations/move_up.anim" type="Animation" id=6]
+[ext_resource path="res://Player/Temp/Animations/swim.anim" type="Animation" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 4.0
-height = 10.0
+radius = 6.0
+height = 8.0
 
-[node name="TempPlayer" type="KinematicBody2D"]
+[node name="TempPlayer" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-walkSpeed = 0
-walkMaxSpeed = 0
-swimMaxSpeed = 0
+walkSpeed = 50
+swimSpeed = 25
+walkMaxSpeed = 150.0
+swimMaxSpeed = 250.0
 keyboardControl = true
 
 [node name="TempSprite" type="Sprite" parent="." index="0"]
@@ -36,7 +38,7 @@ _sections_unfolded = [ "Animation", "Region", "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-position = Vector2( 0, 12 )
+position = Vector2( 0, 10 )
 rotation = 1.5708
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
@@ -52,6 +54,7 @@ anims/move_down = ExtResource( 3 )
 anims/move_left = ExtResource( 4 )
 anims/move_right = ExtResource( 5 )
 anims/move_up = ExtResource( 6 )
+anims/swim = ExtResource( 7 )
 blend_times = [  ]
 
 

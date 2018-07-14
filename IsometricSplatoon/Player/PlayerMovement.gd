@@ -2,6 +2,8 @@ extends KinematicBody2D
 
 #exports
 export (int) var walkSpeed = 0
+export (int) var swimSpeed = 0
+
 export (float) var walkMaxSpeed = 0
 export (float) var swimMaxSpeed = 0
 
@@ -12,6 +14,9 @@ var deadZone  = 0.15
 #movement
 var velocity  = Vector2()
 var playerNum = 0
+
+#transition values
+var swimming = false
 
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
@@ -37,10 +42,19 @@ func joy_con_changed(deviceid, isConnected):
 func _physics_process(delta):
 	var dir = GetInput()
 	HandleVelocity(dir)
+	HandleAnimation()
 	move_and_collide(velocity * delta)
 
 #joystick movement
 func GetInput():
+	
+	#swim input
+	if Input.is_action_pressed( "swim" ):
+		swimming = true
+	else:
+		swimming = false
+	
+	#movement
 	var xAxis = 0
 	var yAxis = 0
 	
@@ -66,13 +80,18 @@ func GetInput():
 
 
 func HandleVelocity(dir):
-	#set speed and max speed
+	#default movement vars
 	var speed = walkSpeed
 	var maxSpeed = walkMaxSpeed
 	
 	var deceleration = Vector2()
 	var acceleration = Vector2()
 	var newVelocity = velocity
+	
+	#set speed and max speed based on form
+	if swimming:
+		speed = swimSpeed
+		maxSpeed = swimMaxSpeed
 	
 	#for x decel
 	if dir.x == 0:
@@ -101,25 +120,28 @@ func HandleVelocity(dir):
 		velocity = newVelocity.normalized() * maxSpeed
 	else:
 		velocity = newVelocity
-	
-	HandleAnimation()
 
 
 func HandleAnimation():
-	if abs(velocity.x) > abs(velocity.y):
-		if velocity.x > 0:
-			if animPlayer.current_animation != "move_right":
-				animPlayer.play( "move_right" )
+	#swim animations
+	if swimming && animPlayer.current_animation != "swim":
+		animPlayer.play("swim")
+	#walk animations
+	elif not swimming:
+		if abs(velocity.x) > abs(velocity.y):
+			if velocity.x > 0:
+				if animPlayer.current_animation != "move_right":
+					animPlayer.play( "move_right" )
+			else:
+				if animPlayer.current_animation != "move_left":
+					animPlayer.play( "move_left" )
 		else:
-			if animPlayer.current_animation != "move_left":
-				animPlayer.play( "move_left" )
-	else:
-		if velocity.y > 0:
-			if animPlayer.current_animation != "move_down":
-				animPlayer.play( "move_down" )
-		else:
-			if animPlayer.current_animation != "move_up":
-				animPlayer.play( "move_up" )
-	
-	if velocity.length_squared() < 0.05:
-		animPlayer.stop()
+			if velocity.y > 0:
+				if animPlayer.current_animation != "move_down":
+					animPlayer.play( "move_down" )
+			else:
+				if animPlayer.current_animation != "move_up":
+					animPlayer.play( "move_up" )
+		
+		if velocity.length_squared() < 0.05:
+			animPlayer.stop()

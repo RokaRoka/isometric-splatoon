@@ -6,4 +6,7 @@
 
 [node name="TempPlayer" parent="." index="0" instance=ExtResource( 1 )]
 
+walkSpeed = 80
+walkMaxSpeed = 150.0
+
 
