@@ -23,8 +23,10 @@ collision/safe_margin = 0.08
 script = ExtResource( 1 )
 walkSpeed = 50
 swimSpeed = 25
+squidSpeed = 20
 walkMaxSpeed = 150.0
 swimMaxSpeed = 250.0
+squidMaxSpeed = 50.0
 keyboardControl = true
 
 [node name="TempSprite" type="Sprite" parent="." index="0"]

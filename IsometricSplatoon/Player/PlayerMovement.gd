@@ -3,9 +3,11 @@ extends KinematicBody2D
 #exports
 export (int) var walkSpeed = 0
 export (int) var swimSpeed = 0
+export (int) var squidSpeed = 0
 
 export (float) var walkMaxSpeed = 0
 export (float) var swimMaxSpeed = 0
+export (float) var squidMaxSpeed = 0
 
 #controller vals
 export (bool) var keyboardControl = false
@@ -13,10 +15,15 @@ var deadZone  = 0.15
 
 #movement
 var velocity  = Vector2()
+var lastAnimDir = "move_down"
 var playerNum = 0
 
 #transition values
+var ground = GroundType.None
 var swimming = false
+
+#external node refs
+onready var inkManager = get_node( "../InkManager") 
 
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
@@ -27,6 +34,7 @@ func _ready():
 	#Input.connect("joy_connect_changed", self, "joy_con_changed")	
 	pass
 
+"""
 func joy_con_changed(deviceid, isConnected):
 	if isConnected:
 		print("Joystick " + str(deviceid) + " connected")
@@ -35,21 +43,30 @@ func joy_con_changed(deviceid, isConnected):
 			print(Input.get_joy_name(playerNum) + " Device found")
 	else:
 		print("Controller D/C")
-
+"""
 
 # Called every frame. Delta is time since last frame.
 # Update game logic here.
 func _physics_process(delta):
+	CheckAndHandleGround()
 	var dir = GetInput()
 	HandleVelocity(dir)
 	HandleAnimation()
 	move_and_collide(velocity * delta)
 
+func CheckAndHandleGround():
+	#first, check position
+	var groundType = inkManager.getGroundTypeAtPosition( position )
+	if groundType != ground:
+		print("New ground! Is "+String(groundType))
+	ground = groundType
+	
+
 #joystick movement
 func GetInput():
 	
 	#swim input
-	if Input.is_action_pressed( "swim" ):
+	if Input.is_action_pressed( "swim" ) and ground == GroundType.MyInk:
 		swimming = true
 	else:
 		swimming = false
@@ -130,18 +147,16 @@ func HandleAnimation():
 	elif not swimming:
 		if abs(velocity.x) > abs(velocity.y):
 			if velocity.x > 0:
-				if animPlayer.current_animation != "move_right":
-					animPlayer.play( "move_right" )
+				lastAnimDir = "move_right"
 			else:
-				if animPlayer.current_animation != "move_left":
-					animPlayer.play( "move_left" )
+				lastAnimDir = "move_left"
 		else:
 			if velocity.y > 0:
-				if animPlayer.current_animation != "move_down":
-					animPlayer.play( "move_down" )
+				lastAnimDir = "move_down"
 			else:
-				if animPlayer.current_animation != "move_up":
-					animPlayer.play( "move_up" )
+				lastAnimDir = "move_up"
 		
+		if animPlayer.current_animation != lastAnimDir:
+			animPlayer.play( lastAnimDir )
 		if velocity.length_squared() < 0.05:
 			animPlayer.stop()

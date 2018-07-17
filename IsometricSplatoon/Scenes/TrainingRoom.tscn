@@ -1,12 +1,58 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Temp/TempPlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=2]
+[ext_resource path="res://Ink/ink_grid.png" type="Texture" id=3]
+[ext_resource path="res://Ink/ink_temp.png" type="Texture" id=4]
 
 [node name="World" type="Node" index="0"]
 
+__meta__ = {
+"_edit_horizontal_guides_": [ 480.0, 720.0, 160.0, -80.0 ],
+"_edit_vertical_guides_": [ 1280.0, 0.0, 640.0 ]
+}
+
 [node name="TempPlayer" parent="." index="0" instance=ExtResource( 1 )]
 
+position = Vector2( 32, 32 )
+_sections_unfolded = [ "Pause", "Transform" ]
 walkSpeed = 80
-walkMaxSpeed = 150.0
+squidSpeed = 0
+squidMaxSpeed = 0
+
+[node name="InkManager" type="Node2D" parent="." index="1"]
+
+z_index = -5
+script = ExtResource( 2 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+__meta__ = {
+"_edit_lock_": true
+}
+mousePaintingAllowed = true
+brushsize = 2
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager" index="0"]
+
+resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 3 ), ExtResource( 4 ) ] ]
+
+[node name="Map" type="Area2D" parent="." index="2"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Material" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map" index="0"]
+
+position = Vector2( 1.50732, 0 )
+build_mode = 0
+polygon = PoolVector2Array( -1.50732, 160, 318.493, 160, 318.493, -80, 958.493, -80, 958.493, 160, 1278.49, 160, 1278.49, 480, 958.493, 480, 958.493, 720, 318.493, 720, 318.493, 480, -1.50732, 480 )
 
 
