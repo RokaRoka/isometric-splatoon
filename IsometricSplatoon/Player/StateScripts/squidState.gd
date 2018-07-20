@@ -1,7 +1,8 @@
 extends "res://General/Scripts/states.gd"
 
 #  The Squid state repsents when an Inkling is in it's squid state which
-#  allows for fast movement in ink
+#  allows for fast movement in ink. However, outside of ink, being in squid
+#  form makes the player vulnerable and slow. Players have to pick and choose.
 
 
 #func enter(host):

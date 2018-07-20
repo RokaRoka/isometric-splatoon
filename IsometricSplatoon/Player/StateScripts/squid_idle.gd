@@ -17,7 +17,7 @@ func enter(host):
 
 
 func handle_input(host, event):
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.is_action_released( "swim" ):
 			print("squid idle released!")
 			return 'kid_idle'
@@ -25,6 +25,18 @@ func handle_input(host, event):
 
 
 func update(host, delta):
+	#check for ink before all else
+	if host.CheckForMyInk():
+		#fast swim swim
+		if 'swim' != host.animPlayer.current_animation:
+			host.animPlayer.play('swim')
+			host.animPlayer.stop()
+	else:
+		#slow ouch ouch
+		if 'octo_move_'+host.lastAnimDir != host.animPlayer.current_animation:
+			host.animPlayer.play('octo_move_'+host.lastAnimDir)
+			host.animPlayer.stop()
+	
 	if host.inputDir.length() > host.deadZone:
 		return 'squid_swim'
 	return .update(host, delta)

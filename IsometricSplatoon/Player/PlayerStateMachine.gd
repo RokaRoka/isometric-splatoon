@@ -84,6 +84,9 @@ func GetDirectionInput():
 	if Input.get_connected_joypads().size() > 0:
 		xAxis = Input.get_joy_axis(0, JOY_AXIS_0)
 		yAxis = Input.get_joy_axis(0, JOY_AXIS_1)
+		if sqrt(abs(pow(xAxis, 2)) + abs(pow(yAxis, 2))) < deadZone:
+			xAxis = 0
+			yAxis = 0
 	
 	if keyboardControl:
 		if Input.is_action_pressed("move_down"):
@@ -122,6 +125,12 @@ func GetAnimDirection():
 
 func GetGroundType():
 	return inkManager.getGroundTypeAtPosition( global_position )
+
+func CheckForMyInk():
+	return ground == GroundType.MyInk
+
+func CheckForTheirInk():
+	return ground == GroundType.TheirInk
 
 func HandleVelocity(speed, maxSpeed):
 	var newVelocity = velocity

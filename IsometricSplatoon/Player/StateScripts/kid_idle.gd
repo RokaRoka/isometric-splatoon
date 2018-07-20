@@ -22,7 +22,7 @@ func enter(host):
 
 
 func handle_input(host, event):
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.is_action_pressed( "swim" ):
 			return 'squid_idle'
 	return .handle_input(host, event)

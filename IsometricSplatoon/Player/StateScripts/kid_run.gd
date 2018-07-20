@@ -23,7 +23,7 @@ func exit(host):
 
 
 func handle_input(host, event):
-	if event is InputEventKey:
+	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.is_action_pressed( "swim" ):
 			return 'squid_swim'
 	return .handle_input(host, event)
@@ -31,14 +31,13 @@ func handle_input(host, event):
 
 func update(host, delta):
 	host.velocity = host.HandleVelocity(runSpeed, runMaxSpeed)
-	CheckMoveAnimation(host)
 	host.move_and_collide(host.velocity * delta)
+	
+	#check if move animation is correct
+	if 'move_'+host.lastAnimDir != host.animPlayer.current_animation:
+		host.animPlayer.play('move_'+host.lastAnimDir)
 	
 	if host.velocity.length_squared() == 0:
 		return 'kid_idle'
 	return .update(host, delta)
-
-
-func CheckMoveAnimation(host):
-	if 'move_'+host.lastAnimDir != host.animPlayer.current_animation:
-		host.animPlayer.play('move_'+host.lastAnimDir)
+	
