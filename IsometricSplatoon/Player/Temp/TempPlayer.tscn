@@ -1,12 +1,16 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Player/PlayerMovement.gd" type="Script" id=1]
+[ext_resource path="res://Player/PlayerStateMachine.gd" type="Script" id=1]
 [ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=2]
 [ext_resource path="res://Player/Temp/Animations/move_down.anim" type="Animation" id=3]
 [ext_resource path="res://Player/Temp/Animations/move_left.anim" type="Animation" id=4]
 [ext_resource path="res://Player/Temp/Animations/move_right.anim" type="Animation" id=5]
 [ext_resource path="res://Player/Temp/Animations/move_up.anim" type="Animation" id=6]
 [ext_resource path="res://Player/Temp/Animations/swim.anim" type="Animation" id=7]
+[ext_resource path="res://Player/StateScripts/kid_idle.gd" type="Script" id=8]
+[ext_resource path="res://Player/StateScripts/kid_run.gd" type="Script" id=9]
+[ext_resource path="res://Player/StateScripts/squid_idle.gd" type="Script" id=10]
+[ext_resource path="res://Player/StateScripts/squid_swim.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape2D" id=1]
 
@@ -21,12 +25,6 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-walkSpeed = 50
-swimSpeed = 25
-squidSpeed = 20
-walkMaxSpeed = 150.0
-swimMaxSpeed = 250.0
-squidMaxSpeed = 50.0
 keyboardControl = true
 
 [node name="TempSprite" type="Sprite" parent="." index="0"]
@@ -58,5 +56,33 @@ anims/move_right = ExtResource( 5 )
 anims/move_up = ExtResource( 6 )
 anims/swim = ExtResource( 7 )
 blend_times = [  ]
+
+[node name="States" type="Node" parent="." index="3"]
+
+[node name="Kid_Idle" type="Node" parent="States" index="0"]
+
+script = ExtResource( 8 )
+
+[node name="Kid_Run" type="Node" parent="States" index="1"]
+
+script = ExtResource( 9 )
+runSpeed = 40.0
+runMaxSpeed = 150.0
+
+[node name="Squid_Idle" type="Node" parent="States" index="2"]
+
+script = ExtResource( 10 )
+
+[node name="Squid_Swim" type="Node" parent="States" index="3"]
+
+script = ExtResource( 11 )
+swimSpeed = 25.0
+swimMaxSpeed = 350.0
+
+[node name="Squid_Crawl" type="Node" parent="States" index="4"]
+
+[node name="Firing" type="Node" parent="States" index="5"]
+
+[node name="Sub" type="Node" parent="States" index="6"]
 
 

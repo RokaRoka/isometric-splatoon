@@ -16,7 +16,7 @@ __meta__ = {
 
 position = Vector2( 32, 32 )
 _sections_unfolded = [ "Pause", "Transform" ]
-walkSpeed = 80
+walkSpeed = 70
 squidSpeed = 0
 squidMaxSpeed = 0
 
@@ -29,7 +29,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 mousePaintingAllowed = true
-brushsize = 2
+brushsize = 4
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager" index="0"]
 

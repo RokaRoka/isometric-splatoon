@@ -14,6 +14,7 @@ export (bool) var keyboardControl = false
 var deadZone  = 0.15
 
 #movement
+var inputDir = Vector2()
 var velocity  = Vector2()
 var lastAnimDir = "move_down"
 var playerNum = 0
@@ -28,11 +29,28 @@ onready var inkManager = get_node( "../InkManager")
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
 
+signal state_changed
+
+var current_state = null
+onready var states_map = {
+	'kid_movement' : $States/Kid_Movement,
+	'squid_movement' : $States/Squid_Movement
+}
+
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
 	#Input.connect("joy_connect_changed", self, "joy_con_changed")	
 	pass
+
+
+func _change_state(state_name):
+	current_state.exit(self)
+	
+	#blah blah blah
+	current_state = states_map[state_name]
+	
+	emit_signal('state_changed', current_state )
 
 """
 func joy_con_changed(deviceid, isConnected):
@@ -60,40 +78,6 @@ func CheckAndHandleGround():
 	if groundType != ground:
 		print("New ground! Is "+String(groundType))
 	ground = groundType
-	
-
-#joystick movement
-func GetInput():
-	
-	#swim input
-	if Input.is_action_pressed( "swim" ) and ground == GroundType.MyInk:
-		swimming = true
-	else:
-		swimming = false
-	
-	#movement
-	var xAxis = 0
-	var yAxis = 0
-	
-	if Input.get_connected_joypads().size() > 0:
-		xAxis = Input.get_joy_axis(playerNum, JOY_AXIS_0)
-		yAxis = Input.get_joy_axis(playerNum, JOY_AXIS_1)
-	
-	if keyboardControl:
-		if Input.is_action_pressed("move_down"):
-			yAxis = 1
-		if Input.is_action_pressed("move_up"):
-			yAxis = -1
-		if Input.is_action_pressed("move_right"):
-			xAxis = 1
-		if Input.is_action_pressed("move_left"):
-			xAxis = -1
-	
-	var axisTotal = Vector2(xAxis, yAxis)
-	if axisTotal.length() > 1 or axisTotal.length() < -1:
-		axisTotal = axisTotal.normalized()
-	
-	return axisTotal
 
 
 func HandleVelocity(dir):
