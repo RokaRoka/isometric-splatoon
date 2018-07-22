@@ -5,8 +5,8 @@ extends "res://General/Scripts/states.gd"
 #  form makes the player vulnerable and slow. Players have to pick and choose.
 
 
-#func enter(host):
-#	return
+func enter(host):
+	return
 
 
 #func exit(host):

@@ -14,11 +14,11 @@ func enter(host):
 	host.animPlayer.stop()
 	host.velocity = Vector2()
 	print("Entering idle")
-	return
+	return .enter(host)
 
 
-#func exit(host):
-#	return
+func exit(host):
+	return .exit(host)
 
 
 func handle_input(host, event):

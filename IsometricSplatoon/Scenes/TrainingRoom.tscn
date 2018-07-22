@@ -5,7 +5,7 @@
 [ext_resource path="res://Ink/ink_grid.png" type="Texture" id=3]
 [ext_resource path="res://Ink/ink_temp.png" type="Texture" id=4]
 
-[node name="World" type="Node" index="0"]
+[node name="Game" type="Node" index="0"]
 
 __meta__ = {
 "_edit_horizontal_guides_": [ 480.0, 720.0, 160.0, -80.0 ],
@@ -16,9 +16,6 @@ __meta__ = {
 
 position = Vector2( 32, 32 )
 _sections_unfolded = [ "Pause", "Transform" ]
-walkSpeed = 70
-squidSpeed = 0
-squidMaxSpeed = 0
 
 [node name="InkManager" type="Node2D" parent="." index="1"]
 
@@ -28,7 +25,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
 }
-mousePaintingAllowed = true
+mousePaintingAllowed = false
 brushsize = 4
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager" index="0"]

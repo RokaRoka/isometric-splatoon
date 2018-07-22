@@ -15,11 +15,11 @@ export (float) var runMaxSpeed = 0
 func enter(host):
 	#host.animPlayer.play('move_'+host.lastAnimDir)
 	print("Entering run")
-	return
+	return .enter(host)
 
 
 func exit(host):
-	return
+	return .exit(host)
 
 
 func handle_input(host, event):

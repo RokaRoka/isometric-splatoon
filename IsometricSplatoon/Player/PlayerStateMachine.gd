@@ -8,7 +8,6 @@ onready var inkManager = get_node( "../InkManager")
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
 
-
 #controller vals
 export (bool) var keyboardControl = false
 var deadZone  = 0.15
@@ -19,6 +18,7 @@ var inputDir = Vector2()
 var velocity  = Vector2()
 var lastAnimDir = "down"
 var ground = GroundType.None
+var canFire = false
 
 #state vars
 var states_stack = []
