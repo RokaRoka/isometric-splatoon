@@ -13,7 +13,7 @@ var bulletArray = []
 
 #weapon data
 var weaponRange = 256.0 #pixels?? I think?
-var weaponBulletSpeed = 320.0 #pixel per second(?)
+var weaponBulletSpeed = 384.0 #pixel per second(?)
 var weaponFireRate = 6 #shots per second
 
 func _ready():
@@ -27,9 +27,9 @@ func _input(event):
 			rotation = atan2(aimDir.y, aimDir.x)
 	#fire the gun
 	if Input.is_action_pressed("fire") and player.canFire:
-		firing = true
+		startFiring()
 	else:
-		firing = false
+		endFiring()
 
 func _physics_process(delta):
 	if fireCooldown <= 1.0/weaponFireRate:
@@ -37,6 +37,12 @@ func _physics_process(delta):
 	elif firing:
 		fireBullet()
 		fireCooldown -= 1.0/weaponFireRate
+
+func startFiring():
+	firing = true
+
+func endFiring():
+	firing = false
 
 func fireBullet():
 	if bullet.can_instance():
@@ -49,7 +55,8 @@ func fireBullet():
 		newBullet.dir = aimDir
 		newBullet.rotation = atan2(aimDir.y, aimDir.x)
 		
-		#bulletArray
+		#lastly, make a test inksplat
+		player.inkManager.inkSplat(GroundType.MyInk, global_position + aimDir * weaponRange, 2)
 		print('Bullet fired! Position: '+String(newBullet.position))
 	else:
 		print("Can't instance bullet?")

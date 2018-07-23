@@ -6,8 +6,7 @@ export (float) var swimMaxSpeed = 0
 export (float) var slowMaxSpeed = 0
 
 func enter(host):
-	#host.animPlayer.play('swim')
-	return
+	return .enter(host)
 
 
 #func exit(host):

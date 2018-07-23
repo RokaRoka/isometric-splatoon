@@ -6,7 +6,9 @@ extends "res://General/Scripts/states.gd"
 
 
 func enter(host):
-	return
+	host.weapon.endFiring()
+	host.canFire = false
+	return .enter(host)
 
 
 #func exit(host):

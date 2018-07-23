@@ -9,7 +9,7 @@ func enter(host):
 	host.animPlayer.stop()
 	host.velocity = Vector2()
 	print("Entering squid idle")
-	return
+	return .enter(host)
 
 
 #func exit(host):

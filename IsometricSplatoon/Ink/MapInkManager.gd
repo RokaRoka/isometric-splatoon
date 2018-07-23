@@ -36,11 +36,17 @@ func _ready():
 		inkGrid[i].resize( 100 ) #make the ink grid rows 100 wide
 		for j in inkGridWidth:
 			inkGrid[i][j] = 1
+	
+	#testing stuff
+	inkSplat( GroundType.MyInk, Vector2(32, 32), 2)
 
 func _input(event):
 	if mousePaintingAllowed:
 		if event is InputEventMouseButton:
-			painting = event.pressed
+			if event.button_index == BUTTON_LEFT:
+				painting = event.pressed
+			if event.button_index == BUTTON_RIGHT:
+				inkSplat( GroundType.MyInk, Vector2(3, 3), 1)
 		if event is InputEventMouse:
 			lastMousePosition = event.global_position
 			if painting:
@@ -48,11 +54,13 @@ func _input(event):
 				if brushsize > 1:
 					for c in brushsize:
 						for r in brushsize:
-							inkArrayPos = positionToInkArrayIndex( event.global_position + Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
-							inkGrid[inkArrayPos.y][inkArrayPos.x] = GroundType.MyInk
+							paintPosition( GroundType.MyInk, event.global_position + Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
+							#inkArrayPos = positionToInkArrayIndex( event.global_position + Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
+							#inkGrid[inkArrayPos.y][inkArrayPos.x] = GroundType.MyInk
 				else:
-					inkArrayPos = positionToInkArrayIndex( event.global_position )
-					inkGrid[inkArrayPos.y][inkArrayPos.x] = GroundType.MyInk
+					paintPosition( GroundType.MyInk, event.global_position )
+					#inkArrayPos = positionToInkArrayIndex( event.global_position )
+					#inkGrid[inkArrayPos.y][inkArrayPos.x] = GroundType.MyInk
 			update()
 
 
@@ -107,3 +115,56 @@ func _draw():
 		else:
 			draw_rect( Rect2( snapPos - Vector2(1, 1), Vector2((inkSquareSize * brushsize) + 2, (inkSquareSize * brushsize) + 2)), Color(0, 0, 0) )
 			draw_texture( inkImage, snapPos )
+
+func paintPosition(groundType, target_position):
+	var index = positionToInkArrayIndex(target_position)
+	inkGrid[index.y][index.x] = groundType
+
+func inkSplat(groundType, center_position, radius):
+	print('painting ground starting at: '+String(center_position))
+	paintPosition( groundType, center_position)
+
+	var inbetween = radius
+	for i in radius + 1: #we paint in four directions
+		#down
+		var paint_position = center_position + (dir.down * (i + 1) * inkSquareSize)
+		#print('painting ground: '+String(paint_position))
+		paintPosition( groundType, paint_position )
+		
+		for j in inbetween:
+			var inbetween_pos = paint_position
+			inbetween_pos += dir.left * (j + 1) * inkSquareSize
+			paintPosition( groundType, inbetween_pos)
+		
+		#up
+		paint_position = center_position + (dir.up * (i + 1) * inkSquareSize)
+		#print('painting ground: '+String(paint_position))
+		paintPosition( groundType, paint_position )
+		
+		for j in inbetween:
+			var inbetween_pos = paint_position
+			inbetween_pos += dir.right * (j + 1) * inkSquareSize
+			paintPosition( groundType, inbetween_pos)
+		
+		#right
+		paint_position = center_position + (dir.right * (i + 1) * inkSquareSize)
+		#print('painting ground: '+String(paint_position))
+		paintPosition( groundType, paint_position )
+		
+		for j in inbetween:
+			var inbetween_pos = paint_position
+			inbetween_pos += dir.down * (j + 1) * inkSquareSize
+			paintPosition( groundType, inbetween_pos)
+		
+		#left
+		paint_position = center_position + (dir.left * (i + 1) * inkSquareSize)
+		#print('painting ground: '+String(paint_position))
+		paintPosition( groundType, paint_position )
+		
+		for j in inbetween:
+			var inbetween_pos = paint_position
+			inbetween_pos += dir.up * (j + 1) * inkSquareSize
+			paintPosition( groundType, inbetween_pos)
+		
+		inbetween -= 1
+

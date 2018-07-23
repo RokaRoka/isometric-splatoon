@@ -7,6 +7,7 @@ onready var inkManager = get_node( "../InkManager")
 
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
+onready var weapon = get_node("Weapon")
 
 #controller vals
 export (bool) var keyboardControl = false
