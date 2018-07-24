@@ -119,6 +119,7 @@ func _draw():
 func paintPosition(groundType, target_position):
 	var index = positionToInkArrayIndex(target_position)
 	inkGrid[index.y][index.x] = groundType
+	update()
 
 func inkSplat(groundType, center_position, radius):
 	print('painting ground starting at: '+String(center_position))

@@ -224,7 +224,6 @@ _sections_unfolded = [ "Animation", "Region", "Transform", "Visibility" ]
 [node name="Weapon" type="Node2D" parent="." index="2"]
 
 script = ExtResource( 4 )
-_sections_unfolded = [ "Transform" ]
 
 [node name="WeaponSprite" type="Sprite" parent="Weapon" index="0"]
 
@@ -285,8 +284,8 @@ script = ExtResource( 14 )
 [node name="Squid_Swim" type="Node" parent="States" index="3"]
 
 script = ExtResource( 15 )
-swimSpeed = 20.0
-swimMaxSpeed = 300.0
+swimSpeed = 40.0
+swimMaxSpeed = 250.0
 slowMaxSpeed = 60.0
 
 [node name="Firing" type="Node" parent="States" index="4"]
