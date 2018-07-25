@@ -16,7 +16,7 @@
 [ext_resource path="res://Player/StateScripts/squid_idle.gd" type="Script" id=14]
 [ext_resource path="res://Player/StateScripts/squid_swim.gd" type="Script" id=15]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=6]
 
 custom_solver_bias = 0.0
 radius = 14.0
@@ -243,7 +243,7 @@ _sections_unfolded = [ "Offset" ]
 
 position = Vector2( 0, 2 )
 rotation = 1.5708
-shape = SubResource( 1 )
+shape = SubResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
@@ -273,7 +273,7 @@ script = ExtResource( 12 )
 [node name="Kid_Run" type="Node" parent="States" index="1"]
 
 script = ExtResource( 13 )
-runSpeed = 40.0
+runSpeed = 50.0
 runMaxSpeed = 120.0
 
 [node name="Squid_Idle" type="Node" parent="States" index="2"]
@@ -283,9 +283,9 @@ script = ExtResource( 14 )
 [node name="Squid_Swim" type="Node" parent="States" index="3"]
 
 script = ExtResource( 15 )
-swimSpeed = 40.0
+swimSpeed = 50.0
 swimMaxSpeed = 250.0
-slowMaxSpeed = 60.0
+slowMaxSpeed = 100.0
 
 [node name="Firing" type="Node" parent="States" index="4"]
 

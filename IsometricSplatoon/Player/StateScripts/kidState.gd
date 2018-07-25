@@ -1,7 +1,7 @@
 extends "res://General/Scripts/states.gd"
 
 #The Kid state repsents when an Inkling is in it's default state
-
+var inkRecoverSpeed = 10.0 #how many seconds to recover
 
 func enter(host):
 	host.canFire = true
@@ -17,5 +17,6 @@ func handle_input(host, event):
 	return .handle_input(host, event)
 
 
-#func update(host, delta):
-#	return
+func update(host, delta):
+	host.RecoverInk(delta, inkRecoverSpeed, false)
+	return .update(host, delta)

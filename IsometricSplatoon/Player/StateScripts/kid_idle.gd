@@ -31,7 +31,7 @@ func handle_input(host, event):
 func update(host, delta):
 	if host.inputDir.length() > host.deadZone:
 		return 'kid_run'
-	return
+	return .update(host, delta)
 
 
 #func _on_animation_finished(anim_name):

@@ -9,13 +9,13 @@ var bufferedAimInput = Vector2()
 var aimDir = Vector2()
 var firing = false
 var fireCooldown = 0.0
-var bulletArray = []
 
 
 #weapon data
 var weaponRange = 256.0 #pixels?? I think?
 var weaponBulletSpeed = 432.0 #pixel per second(?)
-var weaponFireRate = 8 #shots per second
+var weaponFireRate = 10 #shots per second
+var inkConsume = 0.01 # out of 1
 
 
 #paint data
@@ -69,7 +69,7 @@ func updateAim():
 		#bufferedAimInput = Vector2()
 
 func fireBullet():
-	if bullet.can_instance():
+	if bullet.can_instance() and player.TryUseInk(inkConsume):
 		var newBullet = bullet.instance()
 		get_node("/root/Game").add_child(newBullet)
 		newBullet.position = get_node("WeaponSprite").global_position
@@ -79,14 +79,14 @@ func fireBullet():
 		newBullet.dir = aimDir
 		newBullet.rotation = atan2(aimDir.y, aimDir.x)
 		
-		#lastly, make a test inksplat
+		#lastly, make a paint inksplat
 		if paintStack.empty():
 			refillStack()
 		randomSplat()
 		#player.inkManager.inkSplat(GroundType.MyInk, global_position + aimDir * weaponRange, 2)
 		#print('Bullet fired! Position: '+String(newBullet.position))
 	else:
-		print("Can't instance bullet?")
+		print("Can't instance bullet or Not enough ink")
 
 func refillStack():
 	#put these into a duped array so that we can remove contents over

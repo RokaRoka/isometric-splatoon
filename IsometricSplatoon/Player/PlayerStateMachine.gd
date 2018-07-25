@@ -1,6 +1,9 @@
 extends KinematicBody2D
 
 signal state_changed
+signal ink_use(ink_left)
+signal ink_recover(ink_left)
+signal ink_fail
 
 #external node refs
 onready var inkManager = get_node( "../InkManager") 
@@ -20,6 +23,12 @@ var velocity  = Vector2()
 var lastAnimDir = "down"
 var ground = GroundType.None
 var canFire = false
+
+#ink stuff
+var inkTank = 1.0
+var inkRecovering = false
+var inkRecoverRestartCount = 0 #this one counts
+var inkRecoverRestartTime = 1.0 #this is the num that has to be reached to restart
 
 #state vars
 var states_stack = []
@@ -134,6 +143,27 @@ func CheckForMyInk():
 func CheckForTheirInk():
 	return ground == GroundType.TheirInk
 
+func TryUseInk(amount):
+	inkRecoverRestartCount = 0.0
+	if inkTank > amount:
+		#use the ink!
+		inkTank -= amount
+		emit_signal( "ink_use", inkTank)
+		return true
+	else:
+		#show a "not enough ink!" message
+		emit_signal("ink_fail")
+		return false
+
+func RecoverInk(delta, emptyToFullTime, instant = true):
+	if inkTank < 1.0:
+		if not instant:
+			if inkRecoverRestartCount <= inkRecoverRestartTime:
+				inkRecoverRestartCount += delta
+				return
+		inkTank = clamp(inkTank + (delta / emptyToFullTime), 0.0, 1.0)
+		emit_signal("ink_recover", inkTank)
+
 func HandleVelocity(speed, maxSpeed):
 	var newVelocity = velocity
 	
@@ -160,7 +190,10 @@ func HandleVelocity(speed, maxSpeed):
 		newVelocity.y += inputDir.y * speed
 	
 	#cap the velocity if it reaches the max
-	if newVelocity.length_squared() > pow(maxSpeed, 2):
-		newVelocity = newVelocity.normalized() * maxSpeed
+	if newVelocity.length() > maxSpeed:
+		#newVelocity = newVelocity.normalized() * maxSpeed
+		#new max velocity formula
+		#print("Oldvel: "+str(newVelocity)+" Newvel: "+str(newVelocity.linear_interpolate( newVelocity.normalized() * maxSpeed, 0.8)))
+		newVelocity = newVelocity.linear_interpolate( newVelocity.normalized() * maxSpeed, 0.65)
 	
 	return newVelocity
