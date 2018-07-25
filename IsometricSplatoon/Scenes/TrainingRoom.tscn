@@ -14,7 +14,7 @@ __meta__ = {
 
 [node name="TempPlayer" parent="." index="0" instance=ExtResource( 1 )]
 
-position = Vector2( 32, 32 )
+position = Vector2( 240, 208 )
 _sections_unfolded = [ "Pause", "Transform" ]
 
 [node name="InkManager" type="Node2D" parent="." index="1"]
@@ -32,25 +32,23 @@ brushsize = 4
 
 resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 3 ), ExtResource( 4 ) ] ]
 
-[node name="Map" type="Area2D" parent="." index="2"]
+[node name="Map" type="StaticBody2D" parent="." index="2"]
 
 visible = false
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Material" ]
-__meta__ = {
-"_edit_lock_": true
-}
+position = Vector2( 196, 160 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+_sections_unfolded = [ "Material", "Transform" ]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Map" index="0"]
 
-position = Vector2( 1.50732, 0 )
-build_mode = 0
-polygon = PoolVector2Array( -1.50732, 160, 318.493, 160, 318.493, -80, 958.493, -80, 958.493, 160, 1278.49, 160, 1278.49, 480, 958.493, 480, 958.493, 720, 318.493, 720, 318.493, 480, -1.50732, 480 )
+build_mode = 1
+polygon = PoolVector2Array( 0, 0, 640, 0, 640, 320, 0, 320 )
+disabled = true
 
 

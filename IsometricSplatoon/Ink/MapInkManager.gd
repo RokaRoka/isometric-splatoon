@@ -35,10 +35,10 @@ func _ready():
 		inkGrid[i] = []
 		inkGrid[i].resize( 100 ) #make the ink grid rows 100 wide
 		for j in inkGridWidth:
-			inkGrid[i][j] = 1
+			inkGrid[i][j] = GroundType.Ground
 	
 	#testing stuff
-	inkSplat( GroundType.MyInk, Vector2(32, 32), 2)
+	#inkSplat( GroundType.MyInk, Vector2(32, 32), 2)
 
 func _input(event):
 	if mousePaintingAllowed:
@@ -91,6 +91,24 @@ func getGroundTypeByIndex(var x, var y):
 func getGroundTypeAtPosition(position):
 	var index = positionToInkArrayIndex( position )
 	return getGroundTypeByIndex( index.x, index.y )
+
+
+func checkForSurroundedCell(x, y, inkType):
+	#check each surrounding cell for ink
+	#left
+	if not getGroundTypeByIndex(x - 1, y) == inkType:
+		return false
+	#right
+	if not getGroundTypeByIndex(x + 1, y) == inkType:
+		return false
+	#top
+	if not getGroundTypeByIndex(x, y - 1) == inkType:
+		return false
+	#bottom
+	if not getGroundTypeByIndex(x, y + 1) == inkType:
+		return false
+	#return true if not surrounded
+	return true
 
 
 func _draw():
@@ -168,4 +186,21 @@ func inkSplat(groundType, center_position, radius):
 			paintPosition( groundType, inbetween_pos)
 		
 		inbetween -= 1
-
+	#right before the end of the function, check for surrounds starting from the top left corner
+	"""
+	var originIndex = positionToInkArrayIndex( center_position + (Vector2(-1, -1) * inkSquareSize * (radius + 1)))
+	print('checking top left index at '+String(originIndex))
+	var lastSpaceTypes = [GroundType.None, GroundType.None]
+	for j in (radius * 2)+1:
+		lastSpaceTypes[0] = inkGrid[originIndex.x - 2][originIndex.y + j]
+		lastSpaceTypes[1] = inkGrid[originIndex.x - 1][originIndex.y + j]
+		for i in (radius * 2)+1:
+			print('checking space '+String(originIndex + Vector2(i, j)))
+			if (lastSpaceTypes[0] == groundType or lastSpaceTypes[0] == GroundType.None) and lastSpaceTypes[1] == GroundType.Ground and inkGrid[originIndex.x + i][originIndex.y + j] == groundType:
+				if checkForSurroundedCell(originIndex.x + i - 1, originIndex.y + j - 1, groundType):
+					print('surrounded space at '+String(Vector2(i, j)))
+					paintPosition( groundType, Vector2((originIndex.x + i - 1) * inkSquareSize, (originIndex.y + j - 1) * inkSquareSize))
+			#clear values and move on
+			lastSpaceTypes.pop_front()
+			lastSpaceTypes.append(inkGrid[originIndex.x + i][ originIndex.y +j])
+	"""

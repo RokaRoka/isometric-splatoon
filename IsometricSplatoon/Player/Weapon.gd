@@ -15,11 +15,13 @@ var bulletArray = []
 #weapon data
 var weaponRange = 256.0 #pixels?? I think?
 var weaponBulletSpeed = 432.0 #pixel per second(?)
-var weaponFireRate = 6 #shots per second
+var weaponFireRate = 8 #shots per second
 
 
 #paint data
-var paintDistances = [0, 48, 96, 144, 192, 256]
+var minPaintDist = 48
+var maxPaintDist = 240
+var paintDistances = []
 var paintStack = []
 
 func _ready():
@@ -30,13 +32,11 @@ func _input(event):
 	#aim the mouse with keyboard debugging
 	if event is InputEventMouseMotion and player.keyboardControl:
 		if event.relative.length() > 2: 
-			aimDir =  (event.position - player.position).normalized()
-			rotation = atan2(aimDir.y, aimDir.x)
-			print()
+			bufferedAimInput = (event.position - player.position).normalized()
 	elif event is InputEventJoypadMotion and event.is_action("aim"):
-		if event.axis == JOY_AXIS_2 and abs(event.axis_value) > player.deadZone:
+		if event.axis == JOY_AXIS_2: #and abs(event.axis_value) > player.deadZone:
 			bufferedAimInput.x = event.axis_value
-		elif event.axis == JOY_AXIS_3 and abs(event.axis_value) > player.deadZone:
+		elif event.axis == JOY_AXIS_3: #and abs(event.axis_value) > player.deadZone:
 			bufferedAimInput.y = event.axis_value
 	#fire the gun
 	if Input.is_action_pressed("fire") and player.canFire:
@@ -60,10 +60,10 @@ func endFiring():
 	firing = false
 
 func updateAim():
-	if bufferedAimInput.length_squared() > 0:
-		print(String(bufferedAimInput))
+	if bufferedAimInput.length() > player.deadZone:
+		#print(String(bufferedAimInput))
 		aimDir = aimDir.linear_interpolate(bufferedAimInput.normalized(), 0.5)
-		print(String(aimDir))
+		#print(String(aimDir))
 		#aimDir = aimDir.normalized()
 		rotation = atan2(aimDir.y, aimDir.x)
 		#bufferedAimInput = Vector2()
@@ -90,11 +90,14 @@ func fireBullet():
 
 func refillStack():
 	#put these into a duped array so that we can remove contents over
-	var newPaintDistances = paintDistances.duplicate()
-	while not newPaintDistances.empty():
-		var index = randi() % newPaintDistances.size()
-		paintStack.append(newPaintDistances[index])
-		newPaintDistances.remove(index)
+	#var newPaintDistances = paintDistances.duplicate()
+	for i in weaponFireRate + 1:
+		paintDistances.append( minPaintDist + i * ((maxPaintDist - minPaintDist)/weaponFireRate))
+		
+	while not paintDistances.empty():
+		var index = randi() % paintDistances.size()
+		paintStack.append(paintDistances[index])
+		paintDistances.remove(index)
 
 func randomSplat():
 	var distance = paintStack.pop_front()

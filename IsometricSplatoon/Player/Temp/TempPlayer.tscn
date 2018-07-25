@@ -16,11 +16,10 @@
 [ext_resource path="res://Player/StateScripts/squid_idle.gd" type="Script" id=14]
 [ext_resource path="res://Player/StateScripts/squid_swim.gd" type="Script" id=15]
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
-radius = 6.0
-height = 8.0
+radius = 14.0
 
 [sub_resource type="Animation" id=2]
 
@@ -242,7 +241,7 @@ _sections_unfolded = [ "Offset" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="3"]
 
-position = Vector2( 0, 10 )
+position = Vector2( 0, 2 )
 rotation = 1.5708
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]

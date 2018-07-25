@@ -8,10 +8,10 @@ onready var inkManager = get_node( "../InkManager")
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
 onready var weapon = get_node("Weapon")
-
+onready var hitbox = get_node("CollisionShape2D")
 #controller vals
 export (bool) var keyboardControl = false
-var deadZone  = 0.15
+var deadZone  = 0.2
 
 
 #player vars
@@ -125,6 +125,7 @@ func GetAnimDirection():
 
 
 func GetGroundType():
+	
 	return inkManager.getGroundTypeAtPosition( global_position )
 
 func CheckForMyInk():
