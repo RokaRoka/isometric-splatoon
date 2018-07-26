@@ -1,38 +1,51 @@
 extends Node2D
 
+#refs
 onready var player = get_node( ".." )
-var bullet = preload("res://Player/Temp/Weapon/bullet.tscn")
+onready var reticle = get_node("WeaponSprite/ReticleSprite")
 
+var bullet = preload("res://Player/Temp/Weapon/bullet.tscn")
 
 #default firing data
 var bufferedAimInput = Vector2()
 var aimDir = Vector2()
 var firing = false
 var fireCooldown = 0.0
-
+var currentWeaponRange = 0
 
 #weapon data
-var weaponRange = 256.0 #pixels?? I think?
+var minWeaponRange = 96.0
+var maxWeaponRange = 256.0 #pixels?? I think?
 var weaponBulletSpeed = 432.0 #pixel per second(?)
-var weaponFireRate = 10 #shots per second
+var weaponFireRate = 10.0 #shots per second
 var inkConsume = 0.01 # out of 1
 
 
 #paint data
-var minPaintDist = 48
-var maxPaintDist = 240
-var paintDistances = []
+var minPaintDist = 16
+var maxPaintDistDiff = 16 # amount subtracted from current weapon range for max paint range. Complicated, I know
+var paintDistances = [] #paint distances are in fractions
 var paintStack = []
 
 func _ready():
+	currentWeaponRange = maxWeaponRange
+	
 	fireCooldown = 1.0/weaponFireRate
 	refillStack()
 
 func _input(event):
 	#aim the mouse with keyboard debugging
 	if event is InputEventMouseMotion and player.keyboardControl:
-		if event.relative.length() > 2: 
-			bufferedAimInput = (event.position - player.position).normalized()
+		if event.relative.length_squared() > 2:
+			#var mouseDist = (event.position - player.position).length()
+			#currentWeaponRange = clamp(mouseDist, minWeaponRange, maxWeaponRange)
+			var aimDistance = (event.position - player.position)
+			#print("Aim dist is: "+str(aimDistance))
+			#print("Aim length is: "+str(aimDistance.length()))
+			if aimDistance.length()/maxWeaponRange < 1:
+				bufferedAimInput = aimDistance/maxWeaponRange
+			else:
+				bufferedAimInput = aimDistance
 	elif event is InputEventJoypadMotion and event.is_action("aim"):
 		if event.axis == JOY_AXIS_2: #and abs(event.axis_value) > player.deadZone:
 			bufferedAimInput.x = event.axis_value
@@ -60,13 +73,19 @@ func endFiring():
 	firing = false
 
 func updateAim():
-	if bufferedAimInput.length() > player.deadZone:
-		#print(String(bufferedAimInput))
+	var dist = bufferedAimInput.length()
+	if dist > player.deadZone:
+		#set weapon range based on dist
+		currentWeaponRange = clamp(dist * maxWeaponRange, minWeaponRange, maxWeaponRange)
+		print("dist is: "+str(dist)+ ". clamped weapon range is: "+str(currentWeaponRange))
+		
+		#set aim direction and rotation of weapon
 		aimDir = aimDir.linear_interpolate(bufferedAimInput.normalized(), 0.5)
-		#print(String(aimDir))
-		#aimDir = aimDir.normalized()
 		rotation = atan2(aimDir.y, aimDir.x)
-		#bufferedAimInput = Vector2()
+		
+		#update reticle (considering the 24 subtracted from max range)
+		reticle.position.x = currentWeaponRange
+		reticle.self_modulate.a = clamp((currentWeaponRange + 48) / maxWeaponRange, 0, 1.0)		
 
 func fireBullet():
 	if bullet.can_instance() and player.TryUseInk(inkConsume):
@@ -74,7 +93,7 @@ func fireBullet():
 		get_node("/root/Game").add_child(newBullet)
 		newBullet.position = get_node("WeaponSprite").global_position
 		
-		newBullet.lifeTime = weaponRange / weaponBulletSpeed
+		newBullet.lifeTime = currentWeaponRange / weaponBulletSpeed
 		newBullet.speed = weaponBulletSpeed
 		newBullet.dir = aimDir
 		newBullet.rotation = atan2(aimDir.y, aimDir.x)
@@ -82,8 +101,8 @@ func fireBullet():
 		#lastly, make a paint inksplat
 		if paintStack.empty():
 			refillStack()
-		randomSplat()
-		#player.inkManager.inkSplat(GroundType.MyInk, global_position + aimDir * weaponRange, 2)
+		newBullet.assignRandomSplat(getRandomSplatPosition())
+		#player.inkManager.inkSplat(GroundType.MyInk, global_position + aimDir * maxWeaponRange, 2)
 		#print('Bullet fired! Position: '+String(newBullet.position))
 	else:
 		print("Can't instance bullet or Not enough ink")
@@ -92,13 +111,14 @@ func refillStack():
 	#put these into a duped array so that we can remove contents over
 	#var newPaintDistances = paintDistances.duplicate()
 	for i in weaponFireRate + 1:
-		paintDistances.append( minPaintDist + i * ((maxPaintDist - minPaintDist)/weaponFireRate))
+		paintDistances.append(i/weaponFireRate)
 		
 	while not paintDistances.empty():
 		var index = randi() % paintDistances.size()
 		paintStack.append(paintDistances[index])
 		paintDistances.remove(index)
 
-func randomSplat():
-	var distance = paintStack.pop_front()
-	player.inkManager.inkSplat(GroundType.MyInk, global_position + (aimDir * distance), 2) 
+func getRandomSplatPosition():
+	var distance = minPaintDist + (paintStack.pop_front() * ((currentWeaponRange - maxPaintDistDiff) - minPaintDist))
+	return global_position + (aimDir * distance)
+	#player.inkManager.inkSplat(GroundType.MyInk, , 2)

@@ -6,7 +6,7 @@ signal ink_recover(ink_left)
 signal ink_fail
 
 #external node refs
-onready var inkManager = get_node( "../InkManager") 
+onready var inkManager = get_node( "../InkManager")
 
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
@@ -24,11 +24,12 @@ var lastAnimDir = "down"
 var ground = GroundType.None
 var canFire = false
 
+
 #ink stuff
 var inkTank = 1.0
 var inkRecovering = false
 var inkRecoverRestartCount = 0 #this one counts
-var inkRecoverRestartTime = 1.0 #this is the num that has to be reached to restart
+var inkRecoverRestartTime = 1.5 #this is the num that has to be reached to restart
 
 #state vars
 var states_stack = []
