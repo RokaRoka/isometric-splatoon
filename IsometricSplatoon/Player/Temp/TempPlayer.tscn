@@ -285,7 +285,7 @@ script = ExtResource( 14 )
 script = ExtResource( 15 )
 swimSpeed = 50.0
 swimMaxSpeed = 250.0
-slowMaxSpeed = 100.0
+slowMaxSpeed = 80.0
 
 [node name="Firing" type="Node" parent="States" index="4"]
 

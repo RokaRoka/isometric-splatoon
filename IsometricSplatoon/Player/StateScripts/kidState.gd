@@ -4,12 +4,11 @@ extends "res://General/Scripts/states.gd"
 var inkRecoverSpeed = 10.0 #how many seconds to recover
 
 func enter(host):
-	host.canFire = true
+	host.ShowWeapon()
 	return .enter(host)
 
 
 func exit(host):
-	#host.canFire = false
 	return .exit(host)
 
 

@@ -7,12 +7,12 @@ var inkRecoverSpeed = 3.0 #how many seconds to recover
 
 func enter(host):
 	host.weapon.endFiring()
-	host.canFire = false
+	host.HideWeapon()
 	return .enter(host)
 
 
-#func exit(host):
-#	return
+func exit(host):
+	return .exit(host)
 
 
 func handle_input(host, event):

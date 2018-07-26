@@ -164,6 +164,14 @@ func RecoverInk(delta, emptyToFullTime, instant = true):
 		inkTank = clamp(inkTank + (delta / emptyToFullTime), 0.0, 1.0)
 		emit_signal("ink_recover", inkTank)
 
+func ShowWeapon():
+	canFire = true
+	weapon.show()
+
+func HideWeapon():
+	canFire = false
+	weapon.hide()
+
 func HandleVelocity(speed, maxSpeed):
 	var newVelocity = velocity
 	
