@@ -196,10 +196,11 @@ tracks/2/keys = {
 [node name="TempPlayer" type="KinematicBody2D" index="0"]
 
 input_pickable = false
-collision_layer = 1
+collision_layer = 3
 collision_mask = 1
-collision/safe_margin = 0.08
+collision/safe_margin = 0.1
 script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "collision" ]
 keyboardControl = true
 
 [node name="TempSprite" type="Sprite" parent="." index="0"]

@@ -5,6 +5,7 @@ onready var player = get_node( ".." )
 onready var reticle = get_node("WeaponSprite/ReticleSprite")
 
 var bullet = preload("res://Player/Temp/Weapon/bullet.tscn")
+var timedInkSplat = preload("res://Player/Temp/Weapon/TimedSplat.tscn")
 
 #default firing data
 var bufferedAimInput = Vector2()
@@ -19,7 +20,7 @@ var maxWeaponRange = 256.0 #pixels?? I think?
 var weaponBulletSpeed = 432.0 #pixel per second(?)
 var weaponFireRate = 10.0 #shots per second
 var inkConsume = 0.01 # out of 1
-
+var damageDirect = 35.0
 
 #paint data
 var minPaintDist = 16
@@ -77,7 +78,7 @@ func updateAim():
 	if dist > player.deadZone:
 		#set weapon range based on dist
 		currentWeaponRange = clamp(dist * maxWeaponRange, minWeaponRange, maxWeaponRange)
-		print("dist is: "+str(dist)+ ". clamped weapon range is: "+str(currentWeaponRange))
+		#print("dist is: "+str(dist)+ ". clamped weapon range is: "+str(currentWeaponRange))
 		
 		#set aim direction and rotation of weapon
 		aimDir = aimDir.linear_interpolate(bufferedAimInput.normalized(), 0.5)
@@ -88,20 +89,26 @@ func updateAim():
 		reticle.self_modulate.a = clamp((currentWeaponRange + 48) / maxWeaponRange, 0, 1.0)		
 
 func fireBullet():
-	if bullet.can_instance() and player.TryUseInk(inkConsume):
+	if bullet.can_instance() and timedInkSplat.can_instance() and player.TryUseInk(inkConsume):
 		var newBullet = bullet.instance()
 		get_node("/root/Game").add_child(newBullet)
 		newBullet.position = get_node("WeaponSprite").global_position
 		
+		#set direction correctly
 		newBullet.lifeTime = currentWeaponRange / weaponBulletSpeed
 		newBullet.speed = weaponBulletSpeed
 		newBullet.dir = aimDir
 		newBullet.rotation = atan2(aimDir.y, aimDir.x)
 		
+		#set damage
+		newBullet.damageDirect = damageDirect
+		
 		#lastly, make a paint inksplat
 		if paintStack.empty():
 			refillStack()
-		newBullet.assignRandomSplat(getRandomSplatPosition())
+		var newTimedInkSplat = timedInkSplat.instance()
+		get_node("/root/Game").add_child(newTimedInkSplat)
+		newTimedInkSplat.assignRandomSplat(getRandomSplatPosition(), currentWeaponRange/weaponBulletSpeed)
 		#player.inkManager.inkSplat(GroundType.MyInk, global_position + aimDir * maxWeaponRange, 2)
 		#print('Bullet fired! Position: '+String(newBullet.position))
 	else:
@@ -112,7 +119,7 @@ func refillStack():
 	#var newPaintDistances = paintDistances.duplicate()
 	for i in weaponFireRate + 1:
 		paintDistances.append(i/weaponFireRate)
-		
+	
 	while not paintDistances.empty():
 		var index = randi() % paintDistances.size()
 		paintStack.append(paintDistances[index])
