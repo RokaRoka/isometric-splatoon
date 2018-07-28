@@ -2,6 +2,9 @@ extends RigidBody2D
 
 var health = 75
 
+func _ready():
+	$AnimationPlayer.play("float")
+
 func takeDamage(dmgAmount):
 	#particle effect!
 	$HitParticle.restart()
@@ -9,7 +12,7 @@ func takeDamage(dmgAmount):
 	health -= dmgAmount
 	
 	if health <= 0:
-		queue_free()
+		$AnimationPlayer.play("pop")
 
 func _on_Balloony_body_entered(body):
 	print("body name is "+body.name)

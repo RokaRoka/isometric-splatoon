@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Player/PlayerStateMachine.gd" type="Script" id=1]
 [ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=2]
@@ -15,6 +15,9 @@
 [ext_resource path="res://Player/StateScripts/kid_run.gd" type="Script" id=13]
 [ext_resource path="res://Player/StateScripts/squid_idle.gd" type="Script" id=14]
 [ext_resource path="res://Player/StateScripts/squid_swim.gd" type="Script" id=15]
+[ext_resource path="res://General/AudioManager.tscn" type="PackedScene" id=16]
+[ext_resource path="res://Player/Sounds/blaster-shot.wav" type="AudioStream" id=17]
+[ext_resource path="res://Player/Sounds/small-bip.wav" type="AudioStream" id=18]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -223,6 +226,7 @@ _sections_unfolded = [ "Animation", "Region", "Transform", "Visibility" ]
 
 [node name="Weapon" type="Node2D" parent="." index="2"]
 
+editor/display_folded = true
 script = ExtResource( 4 )
 
 [node name="WeaponSprite" type="Sprite" parent="Weapon" index="0"]
@@ -289,4 +293,11 @@ slowMaxSpeed = 80.0
 
 [node name="Sub" type="Node" parent="States" index="5"]
 
+[node name="AudioStreamPlayer" parent="." index="6" instance=ExtResource( 16 )]
 
+[node name="ResourcePreloader" parent="AudioStreamPlayer" index="0"]
+
+resources = [ PoolStringArray( "blaster-shot", "splatling-bip" ), [ ExtResource( 17 ), ExtResource( 18 ) ] ]
+
+
+[editable path="AudioStreamPlayer"]

@@ -12,6 +12,8 @@ onready var inkManager = get_node( "../InkManager")
 onready var animPlayer = get_node( "AnimationPlayer" )
 onready var weapon = get_node("Weapon")
 onready var hitbox = get_node("CollisionShape2D")
+onready var audioPlayer = get_node("AudioStreamPlayer")
+
 #controller vals
 export (bool) var keyboardControl = false
 var deadZone  = 0.2
