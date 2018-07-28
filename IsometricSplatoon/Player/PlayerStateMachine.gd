@@ -6,7 +6,7 @@ signal ink_recover(ink_left)
 signal ink_fail
 
 #external node refs
-onready var inkManager = get_node( "../InkManager")
+onready var inkManager = get_node( "/root/Game/InkManager")
 
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
@@ -137,7 +137,6 @@ func GetAnimDirection():
 
 
 func GetGroundType():
-	
 	return inkManager.getGroundTypeAtPosition( global_position )
 
 func CheckForMyInk():

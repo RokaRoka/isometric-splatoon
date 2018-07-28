@@ -7,10 +7,10 @@
 [ext_resource path="res://Player/UI/noink.png" type="Texture" id=5]
 [ext_resource path="res://Player/UI/recoverink.png" type="Texture" id=6]
 [ext_resource path="res://Player/Temp/TempPlayer.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=8]
-[ext_resource path="res://Ink/ink_grid.png" type="Texture" id=9]
-[ext_resource path="res://Ink/ink_temp.png" type="Texture" id=10]
-[ext_resource path="res://BalloonTrial/Balloony/Balloony.tscn" type="PackedScene" id=11]
+[ext_resource path="res://BalloonTrial/Balloony/Balloony.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=9]
+[ext_resource path="res://Ink/ink_grid.png" type="Texture" id=10]
+[ext_resource path="res://Ink/ink_temp.png" type="Texture" id=11]
 
 [sub_resource type="Animation" id=1]
 
@@ -246,16 +246,24 @@ anims/ink_recover = SubResource( 1 )
 anims/no_ink = SubResource( 2 )
 blend_times = [  ]
 
-[node name="TempPlayer" parent="." index="1" instance=ExtResource( 7 )]
+[node name="Entities" type="YSort" parent="." index="1"]
+
+sort_enabled = true
+
+[node name="TempPlayer" parent="Entities" index="0" instance=ExtResource( 7 )]
 
 position = Vector2( 240, 208 )
-_sections_unfolded = [ "Pause", "Transform" ]
+_sections_unfolded = [ "Collision", "Pause", "Transform", "collision" ]
+
+[node name="Balloony" parent="Entities" index="1" instance=ExtResource( 8 )]
+
+position = Vector2( 518.561, 97.5072 )
 
 [node name="InkManager" type="Node2D" parent="." index="2"]
 
 editor/display_folded = true
 z_index = -5
-script = ExtResource( 8 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Transform", "Z Index" ]
 __meta__ = {
 "_edit_lock_": true
@@ -265,7 +273,7 @@ brushsize = 4
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager" index="0"]
 
-resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 9 ), ExtResource( 10 ) ] ]
+resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 10 ), ExtResource( 11 ) ] ]
 
 [node name="Map" type="StaticBody2D" parent="." index="3"]
 
@@ -287,14 +295,10 @@ build_mode = 1
 polygon = PoolVector2Array( 0, 0, 640, 0, 640, 320, 0, 320 )
 disabled = true
 
-[node name="Balloony" parent="." index="4" instance=ExtResource( 11 )]
+[connection signal="ink_fail" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
 
-position = Vector2( 518.561, 97.5072 )
+[connection signal="ink_recover" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]
 
-[connection signal="ink_fail" from="TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
-
-[connection signal="ink_recover" from="TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]
-
-[connection signal="ink_use" from="TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_use"]
+[connection signal="ink_use" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_use"]
 
 
