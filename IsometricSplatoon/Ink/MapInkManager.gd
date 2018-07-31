@@ -1,20 +1,18 @@
 extends Node2D
 
+#ref to boundaries
+onready var boundaries = get_node("/root/Game/Boundaries")
+
 #ink square data
 onready var inkImage = get_node( "ResourcePreloader" ).get_resource( "ink_temp")
 onready var inkGridImage = get_node( "ResourcePreloader" ).get_resource( "ink_grid")
-
 var inkImages = []
-
 var inkSquareSize = 8
-
-#map area
-onready var MapArea2D = get_node("../Map")
 
 #grid for all ink data
 var inkGrid = [[]]
-var inkGridWidth = 100
-var inkGridHeight = 100
+var inkGridWidth = 50
+var inkGridHeight = 50
 
 #mouse painting data
 export (bool) var mousePaintingAllowed = false
@@ -23,6 +21,18 @@ var painting = false
 var lastMousePosition = Vector2()
 
 func _ready():
+	if boundaries != null:
+		var width = 0
+		var height = 0
+		var concaveShape = boundaries.get_node("CollisionPolygon2D").polygon
+		for point in concaveShape:
+			if point.x > width:
+				width = point.x
+			if point.y > height:
+				height = point.y
+	
+		inkGridWidth = width/inkSquareSize
+		inkGridHeight = height/inkSquareSize
 	inkImages = [
 		0, #none
 		inkGridImage, #"ground" image
@@ -30,10 +40,10 @@ func _ready():
 		0 #enemy ink
 	]
 	#set up grid
-	inkGrid.resize( 100 ) # make the ink grid columns 100 high
+	inkGrid.resize( inkGridHeight ) # make the ink grid columns 100 high
 	for i in inkGridHeight:
 		inkGrid[i] = []
-		inkGrid[i].resize( 100 ) #make the ink grid rows 100 wide
+		inkGrid[i].resize( inkGridWidth ) #make the ink grid rows 100 wide
 		for j in inkGridWidth:
 			inkGrid[i][j] = GroundType.Ground
 	

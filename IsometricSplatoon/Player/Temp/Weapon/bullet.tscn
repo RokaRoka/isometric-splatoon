@@ -41,4 +41,6 @@ shape = SubResource( 1 )
 
 texture = ExtResource( 2 )
 
+[connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
+
 

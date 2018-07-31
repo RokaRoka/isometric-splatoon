@@ -109,7 +109,6 @@ func fireBullet():
 		var newTimedInkSplat = timedInkSplat.instance()
 		get_node("/root/Game").add_child(newTimedInkSplat)
 		newTimedInkSplat.assignRandomSplat(getRandomSplatPosition(), currentWeaponRange/weaponBulletSpeed)
-		player.audioPlayer.PlayAudio('splatling-bip')
 		
 	else:
 		print("Can't instance bullet or Not enough ink")

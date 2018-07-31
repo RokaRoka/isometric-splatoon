@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/small-bip.wav-1ec9a41096fc41ee35a1d6478259a0f1.sample"
+path="res://.import/hit.wav-9fd601d582f2556f0967676b43418a29.sample"
 
 [deps]
 
-source_file="res://Player/Sounds/small-bip.wav"
-dest_files=[ "res://.import/small-bip.wav-1ec9a41096fc41ee35a1d6478259a0f1.sample" ]
+source_file="res://General/Sounds/hit.wav"
+dest_files=[ "res://.import/hit.wav-9fd601d582f2556f0967676b43418a29.sample" ]
 
 [params]
 
