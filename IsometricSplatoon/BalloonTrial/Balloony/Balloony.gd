@@ -1,5 +1,7 @@
 extends RigidBody2D
 
+signal popped
+
 var health = 75
 
 func _ready():
@@ -15,6 +17,7 @@ func takeDamage(dmgAmount):
 	health -= dmgAmount
 	if health <= 0:
 		$AnimationPlayer.play("pop")
+		emit_signal("popped")
 
 func _on_Balloony_body_entered(body):
 	#print("body name is "+body.name)

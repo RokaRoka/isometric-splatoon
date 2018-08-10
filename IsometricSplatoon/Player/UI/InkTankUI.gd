@@ -1,8 +1,8 @@
 extends NinePatchRect
 
 onready var inkBar = $MarginContainer/TextureProgress
-onready var noInk = $MarginContainer/NoInkTexture
-onready var inkRecover = $MarginContainer/RecoverInkTexture
+#onready var noInk = $MarginContainer/NoInkTexture
+#onready var inkRecover = $MarginContainer/RecoverInkTexture
 
 func updateInkUI(ink_amount):
 	inkBar.value = (inkBar.max_value - inkBar.min_value) * ink_amount
