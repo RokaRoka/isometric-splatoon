@@ -53,7 +53,7 @@ func _input(event):
 		elif event.axis == JOY_AXIS_3: #and abs(event.axis_value) > player.deadZone:
 			bufferedAimInput.y = event.axis_value
 	#fire the gun
-	if Input.is_action_pressed("fire") and player.canFire:
+	if Input.is_action_pressed("fire") and player.canFire and player.mouseControl:
 		startFiring()
 	else:
 		endFiring()

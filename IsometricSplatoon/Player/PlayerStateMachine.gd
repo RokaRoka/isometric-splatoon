@@ -16,6 +16,7 @@ onready var audioPlayer = get_node("AudioStreamPlayer")
 
 #controller vals
 export (bool) var keyboardControl = false
+export (bool) var mouseControl = false
 var deadZone  = 0.2
 
 

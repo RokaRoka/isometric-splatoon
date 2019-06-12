@@ -27,7 +27,7 @@ func _ready():
 	StartTrial() #temporarily in ready
 
 func _process(delta):
-	if started:
+	if started and not complete:
 		TimerTick(delta)
 
 func StartTrial():
@@ -48,12 +48,18 @@ func SpawnBalloon(position):
 	newBalloony.connect( "popped", self, "_on_Balloon_popped")
 
 func _on_Balloon_popped():
-	balloonScore += 1
-	if balloonScore == balloonMax:
-		started = false
-		complete = true
-	else:
+	if balloonScore < balloonMax:
+		balloonScore += 1
 		emit_signal("balloon_score_update", balloonScore)
+		#When balloon score hits a certain point, increase difficulty(?)
+		if balloonScore == 5:
+			$SpawnTimer.wait_time /= 2
+		if balloonScore == 10:
+			$SpawnTimer.wait_time /= 2
+	
+	if balloonScore >= balloonMax:
+		complete = true
+		$SpawnTimer.stop()
 
 func _on_SpawnTimer_timeout():
 	var r_num = randi() % balloonSlots.size()
