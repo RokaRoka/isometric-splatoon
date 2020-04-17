@@ -6,13 +6,17 @@ onready var boundaries = get_node("/root/Game/Boundaries")
 #ink square data
 onready var inkImage = get_node( "ResourcePreloader" ).get_resource( "ink_temp")
 onready var inkGridImage = get_node( "ResourcePreloader" ).get_resource( "ink_grid")
-var inkImages = []
+onready var inkImages = [
+		0, #none
+		inkGridImage, #"ground" image
+		inkImage, #ink image
+	]
 var inkSquareSize = 8
 
 #grid for all ink data
 var inkGrid = [[]]
-var inkGridWidth = 50
-var inkGridHeight = 50
+var inkGridWidth = 0
+var inkGridHeight = 0
 
 #mouse painting data
 export (bool) var mousePaintingAllowed = false
@@ -33,12 +37,7 @@ func _ready():
 	
 		inkGridWidth = width/inkSquareSize
 		inkGridHeight = height/inkSquareSize
-	inkImages = [
-		0, #none
-		inkGridImage, #"ground" image
-		inkImage, #ink image
-		0 #enemy ink
-	]
+	
 	#set up grid
 	inkGrid.resize( inkGridHeight ) # make the ink grid columns 100 high
 	for i in inkGridHeight:
