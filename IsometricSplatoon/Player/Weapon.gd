@@ -2,7 +2,7 @@ extends Node2D
 
 #refs
 onready var player = get_node( ".." )
-onready var reticle = get_node("WeaponSprite/ReticleSprite")
+onready var reticle = get_node("ReticleSprite")
 
 var bullet = preload("res://Player/Temp/Weapon/bullet.tscn")
 var timedInkSplat = preload("res://Player/Temp/Weapon/TimedSplat.tscn")
