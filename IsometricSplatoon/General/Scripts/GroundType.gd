@@ -1,6 +1,6 @@
 extends Node
 
-enum GroundType {
+enum {
 	None,
 	Ground,
 	MyInk,
