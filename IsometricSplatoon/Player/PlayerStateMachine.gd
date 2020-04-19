@@ -45,6 +45,8 @@ onready var states_map = {
 }
 
 func _ready():
+	#temp, set player ref to UI?
+	$"../../UI/InkTankUI".player = self
 	states_stack.push_front( $States/Kid_Idle )
 	current_state = states_stack[0]
 	_change_state('kid_idle')

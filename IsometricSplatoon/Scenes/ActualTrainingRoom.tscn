@@ -77,10 +77,11 @@ __meta__ = {
 
 [node name="InkTankUI" type="NinePatchRect" parent="UI"]
 self_modulate = Color( 0.713726, 0.713726, 0.713726, 0.560784 )
-margin_left = 35.0387
-margin_top = 23.6665
-margin_right = 67.0387
-margin_bottom = 87.6665
+margin_left = 35.0
+margin_top = 24.0
+margin_right = 83.0
+margin_bottom = 120.0
+rect_scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 6 )
 patch_margin_left = 16
 patch_margin_top = 16
@@ -113,10 +114,14 @@ __meta__ = {
 
 [node name="NoInkTexture" type="TextureRect" parent="UI/InkTankUI"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 8.0
-margin_top = 32.6778
-margin_right = 24.0
-margin_bottom = 56.6778
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.9
+margin_top = 22.0
+margin_bottom = -22.0
+size_flags_horizontal = 12
+size_flags_vertical = 12
 texture = ExtResource( 2 )
 expand = true
 __meta__ = {
@@ -125,12 +130,17 @@ __meta__ = {
 
 [node name="RecoverInkTexture" type="TextureRect" parent="UI/InkTankUI"]
 self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 8.0
-margin_top = 32.6778
-margin_right = 24.0
-margin_bottom = 56.6778
+anchor_left = 0.15
+anchor_top = 0.1
+anchor_right = 0.85
+anchor_bottom = 0.9
+margin_left = -0.2
+margin_top = 8.0
+margin_right = 32.2
+margin_bottom = -12.0
+rect_scale = Vector2( 0.5, 1 )
+size_flags_horizontal = 4
 texture = ExtResource( 4 )
-expand = true
 stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -145,7 +155,7 @@ wait_time = 0.75
 
 [node name="Entities" type="YSort" parent="."]
 
-[node name="TempPlayer" parent="Entities" instance=ExtResource( 13 )]
+[node name="Player" parent="Entities" instance=ExtResource( 13 )]
 position = Vector2( 240, 208 )
 mouseControl = true
 
@@ -176,10 +186,7 @@ position = Vector2( 128, 32 )
 visible = false
 build_mode = 1
 polygon = PoolVector2Array( 0, 0, 752, 0, 752, 512, 0, 512 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
 [connection signal="timeout" from="UI/InkTankUI/FadeTimer" to="UI/InkTankUI" method="_on_FadeTimer_timeout"]
-[connection signal="ink_fail" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
-[connection signal="ink_recover" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]
-[connection signal="ink_use" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_use"]
+[connection signal="ink_fail" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
+[connection signal="ink_recover" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]
+[connection signal="ink_use" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_use"]

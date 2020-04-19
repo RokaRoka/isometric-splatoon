@@ -15,7 +15,7 @@
 [ext_resource path="res://Player/StateScripts/kid_run.gd" type="Script" id=13]
 [ext_resource path="res://Player/StateScripts/squid_idle.gd" type="Script" id=14]
 [ext_resource path="res://Player/StateScripts/squid_swim.gd" type="Script" id=15]
-[ext_resource path="res://General/AudioManager.tscn" type="PackedScene" id=16]
+[ext_resource path="res://General/Scripts/AudioManager.gd" type="Script" id=16]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 14.0
@@ -259,4 +259,7 @@ slowMaxSpeed = 80.0
 
 [node name="Sub" type="Node" parent="States"]
 
-[node name="AudioStreamPlayer" parent="." instance=ExtResource( 16 )]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource( 16 )
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="AudioStreamPlayer"]
