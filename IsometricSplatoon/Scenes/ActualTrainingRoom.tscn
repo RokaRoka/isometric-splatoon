@@ -172,6 +172,7 @@ brushsize = 4
 resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 10 ), ExtResource( 11 ) ] ]
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 z_index = -5
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 16, 16 )

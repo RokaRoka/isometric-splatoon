@@ -41,7 +41,7 @@ onready var states_map = {
 	'kid_idle' : $States/Kid_Idle,
 	'kid_run' : $States/Kid_Run,
 	'squid_idle' : $States/Squid_Idle,
-	'squid_swim' : $States/Squid_Swim
+	'squid_swim' : $States/Squid_Swim,
 }
 
 func _ready():
@@ -73,7 +73,8 @@ func _change_state(state_name):
 	
 	if state_name == 'previous':
 		states_stack.pop_front()
-	#do a elif here for states that stack (i.e. like jumping or firing)
+#	elif state_name in ['firing', 'sub']:
+#		states_stack.push_front(states_map[state_name])
 	else:
 		var new_state = states_map[state_name]
 		states_stack[0] = new_state

@@ -17,6 +17,7 @@ var currentWeaponRange = 0
 #weapon data
 var minWeaponRange = 96.0
 var maxWeaponRange = 256.0 #pixels?? I think?
+var bulletOffset = 32
 var weaponBulletSpeed = 432.0 #pixel per second(?)
 var weaponFireRate = 10.0 #shots per second
 var inkConsume = 0.01 # out of 1
@@ -73,6 +74,9 @@ func startFiring():
 func endFiring():
 	firing = false
 
+func getAimDir():
+	return rotation
+
 func updateAim():
 	var dist = bufferedAimInput.length()
 	if dist > player.deadZone:
@@ -92,7 +96,7 @@ func fireBullet():
 	if bullet.can_instance() and timedInkSplat.can_instance() and player.TryUseInk(inkConsume):
 		var newBullet = bullet.instance()
 		get_node("/root/Game").add_child(newBullet)
-		newBullet.position = get_node("WeaponSprite").global_position
+		newBullet.position = global_position + (aimDir * bulletOffset)
 		
 		#set direction correctly
 		newBullet.lifeTime = currentWeaponRange / weaponBulletSpeed

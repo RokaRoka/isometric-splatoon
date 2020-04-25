@@ -236,7 +236,7 @@ tracks/3/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 resource_name = "shoot_e"
 length = 0.4
 step = 0.05
@@ -301,7 +301,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "shoot_n"
 length = 0.4
 step = 0.05
@@ -366,7 +366,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 resource_name = "shoot_ne"
 length = 0.4
 step = 0.05
@@ -431,8 +431,7 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=6]
-resource_name = "shoot_nw"
+[sub_resource type="Animation" id=9]
 length = 0.4
 step = 0.05
 tracks/0/type = "value"
@@ -808,10 +807,10 @@ anims/octo_move_down = SubResource( 2 )
 anims/octo_move_left = SubResource( 3 )
 anims/octo_move_right = SubResource( 4 )
 anims/octo_move_up = SubResource( 5 )
-anims/shoot_e = SubResource( 7 )
-anims/shoot_n = SubResource( 8 )
-anims/shoot_ne = SubResource( 9 )
-anims/shoot_nw = SubResource( 6 )
+anims/shoot_e = SubResource( 6 )
+anims/shoot_n = SubResource( 7 )
+anims/shoot_ne = SubResource( 8 )
+anims/shoot_nw = SubResource( 9 )
 anims/shoot_s = SubResource( 10 )
 anims/shoot_se = SubResource( 11 )
 anims/shoot_sw = SubResource( 12 )
@@ -836,10 +835,6 @@ script = ExtResource( 15 )
 swimSpeed = 50.0
 swimMaxSpeed = 250.0
 slowMaxSpeed = 80.0
-
-[node name="Firing" type="Node" parent="States"]
-
-[node name="Sub" type="Node" parent="States"]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 16 )

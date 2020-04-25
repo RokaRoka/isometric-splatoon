@@ -149,7 +149,7 @@ func paintPosition(groundType, target_position):
 	update()
 
 func inkSplat(groundType, center_position, radius):
-	print('painting ground starting at: '+String(center_position))
+	#print('painting ground starting at: '+String(center_position))
 	paintPosition( groundType, center_position)
 
 	var inbetween = radius
