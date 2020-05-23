@@ -16,7 +16,7 @@ var currentWeaponRange = 0
 
 #weapon data
 var minWeaponRange = 96.0
-var maxWeaponRange = 256.0 #pixels?? I think?
+var maxWeaponRange = 192.0 #pixels?? I think?
 var bulletOffset = 32
 var weaponBulletSpeed = 432.0 #pixel per second(?)
 var weaponFireRate = 10.0 #shots per second
@@ -31,7 +31,6 @@ var paintStack = []
 
 func _ready():
 	currentWeaponRange = maxWeaponRange
-	
 	fireCooldown = 1.0/weaponFireRate
 	refillStack()
 
@@ -81,7 +80,7 @@ func updateAim():
 	var dist = bufferedAimInput.length()
 	if dist > player.deadZone:
 		#set weapon range based on dist
-		currentWeaponRange = clamp(dist * maxWeaponRange, minWeaponRange, maxWeaponRange)
+		#currentWeaponRange = clamp(dist * maxWeaponRange, minWeaponRange, maxWeaponRange)
 		#print("dist is: "+str(dist)+ ". clamped weapon range is: "+str(currentWeaponRange))
 		
 		#set aim direction and rotation of weapon
@@ -90,10 +89,10 @@ func updateAim():
 		
 		#update reticle (considering the 24 subtracted from max range)
 		reticle.position.x = currentWeaponRange
-		reticle.self_modulate.a = clamp((currentWeaponRange + 48) / maxWeaponRange, 0, 1.0)		
+		#reticle.self_modulate.a = clamp((currentWeaponRange + 48) / maxWeaponRange, 0, 1.0)		
 
 func fireBullet():
-	if bullet.can_instance() and timedInkSplat.can_instance() and player.TryUseInk(inkConsume):
+	if player.TryUseInk(inkConsume):
 		var newBullet = bullet.instance()
 		get_node("/root/Game").add_child(newBullet)
 		newBullet.position = global_position + (aimDir * bulletOffset)
@@ -115,7 +114,7 @@ func fireBullet():
 		newTimedInkSplat.assignRandomSplat(getRandomSplatPosition(), currentWeaponRange/weaponBulletSpeed)
 		
 	else:
-		print("Can't instance bullet or Not enough ink")
+		print("Not enough ink")
 
 func refillStack():
 	#put these into a duped array so that we can remove contents over
