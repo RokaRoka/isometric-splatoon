@@ -1,9 +1,9 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://BalloonTrial/Balloony/Balloony.gd" type="Script" id=1]
 [ext_resource path="res://General/Sprites/dropshadow_32p.png" type="Texture" id=2]
 [ext_resource path="res://BalloonTrial/Balloony/balloony.png" type="Texture" id=3]
-[ext_resource path="res://Player/Temp/Weapon/ink-hit.png" type="Texture" id=4]
+[ext_resource path="res://General/VFX/HitParticle.tscn" type="PackedScene" id=4]
 [ext_resource path="res://General/AudioManager.tscn" type="PackedScene" id=5]
 [ext_resource path="res://General/Sounds/hit.wav" type="AudioStream" id=6]
 
@@ -68,30 +68,10 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Curve" id=4]
-_data = [ Vector2( 0.00351587, 0.508002 ), 0.0, 0.250888, 0, 0, Vector2( 1, 1 ), 0.16134, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-emission_shape = 1
-emission_sphere_radius = 4.0
-flag_disable_z = true
-spread = 180.0
-gravity = Vector3( 0, 0, 0 )
-angular_velocity = 3.0
-angular_velocity_random = 0.8
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 3.0
-scale_random = 0.25
-scale_curve = SubResource( 5 )
-
 [node name="Balloony" type="RigidBody2D" groups=[
 "balloon",
 ]]
-collision_layer = 16
+collision_layer = 17
 collision_mask = 8
 mode = 3
 gravity_scale = 0.0
@@ -118,15 +98,7 @@ flip_h = true
 anims/float = SubResource( 2 )
 anims/pop = SubResource( 3 )
 
-[node name="HitParticle" type="Particles2D" parent="."]
-emitting = false
-amount = 1
-one_shot = true
-speed_scale = 8.0
-randomness = 0.2
-local_coords = false
-process_material = SubResource( 6 )
-texture = ExtResource( 4 )
+[node name="HitParticle" parent="." instance=ExtResource( 4 )]
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource( 5 )]
 

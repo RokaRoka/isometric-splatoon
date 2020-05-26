@@ -100,8 +100,8 @@ aim={
 2d_physics/layer_1="everything"
 2d_physics/layer_2="player"
 2d_physics/layer_3="wall"
-2d_physics/layer_4="bullet"
-2d_physics/layer_5="balloon"
+2d_physics/layer_4="shot"
+2d_physics/layer_5="enemy"
 
 [rendering]
 
