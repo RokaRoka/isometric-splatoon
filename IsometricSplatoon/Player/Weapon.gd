@@ -1,8 +1,8 @@
 extends Node2D
 
 #refs
-onready var player = get_node( ".." )
-onready var reticle = get_node("ReticleSprite")
+onready var player = get_parent()
+onready var reticle = $ReticleSprite
 
 var bullet = preload("res://Player/Temp/Weapon/bullet.tscn")
 var timedInkSplat = preload("res://Player/Temp/Weapon/TimedSplat.tscn")

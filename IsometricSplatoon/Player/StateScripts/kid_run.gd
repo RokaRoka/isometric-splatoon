@@ -55,6 +55,8 @@ func update(host, delta):
 			animDir = "ne"
 		if 'shoot_'+animDir != host.animPlayer.current_animation:
 			host.animPlayer.play('shoot_'+animDir)
+			if animDir == "nil":
+				print(normalRot)
 	elif 'move_'+host.lastAnimDir != host.animPlayer.current_animation:
 		host.animPlayer.play('move_'+host.lastAnimDir)
 	
