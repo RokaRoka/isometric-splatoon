@@ -755,7 +755,9 @@ tracks/4/keys = {
 "values": [ true ]
 }
 
-[node name="TempPlayer" type="KinematicBody2D"]
+[node name="TempPlayer" type="KinematicBody2D" groups=[
+"player",
+]]
 collision_layer = 3
 collision/safe_margin = 0.1
 script = ExtResource( 1 )
