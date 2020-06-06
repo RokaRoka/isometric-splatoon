@@ -9,14 +9,14 @@ onready var inkManager = get_node( "/root/Game/InkManager")
 
 onready var animPlayer = $AnimationPlayer
 
-var velocity := Vector2()
+export var speed := 80
 var ground := GroundType.None
 
 #enemy behavior vars
 var player
 var detectionRangeSqd = 512
 var playerDetected := false
-var attackRangeSqd := 240
+var attackRangeSqd := 128
 var playerInRange := false
 
 #state vars
@@ -47,9 +47,10 @@ func _physics_process(delta):
 		_change_state(state_name)
 
 func getPlayerDetection():
-	if position.distance_squared_to(player.position) < detectionRangeSqd:
+	if position.distance_to(player.position) < detectionRangeSqd:
+		#print("dist sqd from player ", position.distance_to(player.position))
 		playerDetected = true
-		if position.distance_squared_to(player.position) < attackRangeSqd:
+		if position.distance_to(player.position) < attackRangeSqd:
 			playerInRange = true
 		else:
 			playerInRange = false
@@ -57,9 +58,10 @@ func getPlayerDetection():
 		playerDetected = false
 		playerInRange = false
 
-func moveTowards(var targetPosition, var delta:float ):
+func moveTowards(var targetPosition, var speed, var delta:float ):
 	#var path = navigation.get_simple_path(position, targetPosition)
-	position = position.move_toward(targetPosition, delta)
+	animPlayer.play("walk")
+	position = position.move_toward(targetPosition, delta * speed)
 
 # STATE FUNCTIONS #
 func _change_state(state_name):

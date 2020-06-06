@@ -5,15 +5,18 @@ extends State
 # The enemy returns to the prev state
 
 var attackCount = 0
+var attackDone = false
 export var shotsFired = 3
 
 func enter(host: Enemy):
 	attackCount = 0
+	attackDone = false
 	host.animPlayer.connect("animation_finished", self, "animationDone", [], CONNECT_ONESHOT)
 	host.animPlayer.play("attack")
 
 func update(host: Enemy, delta):
-	pass
+	if attackDone:
+		return 'previous'
 
 func exit(host):
 	$AttackTimer.stop()
@@ -25,7 +28,8 @@ func animationDone(anim_name):
 func attackTimerTimeOut():
 	attackCount += 1
 	if attackCount > shotsFired:
-		return 'previous' #we exit once finishing all fired shots
+		print("exit!")
+		attackDone = true #we exit once finishing all fired shots
 	else:
 		print("Enemy shot ", attackCount, "!")
 		#host.doSomething

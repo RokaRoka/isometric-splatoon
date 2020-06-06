@@ -6,7 +6,7 @@
 [ext_resource path="res://Player/Temp/Weapon/ink-hit.png" type="Texture" id=4]
 [ext_resource path="res://Enemy/Robocto/States/enemy_idle.gd" type="Script" id=5]
 [ext_resource path="res://Enemy/Robocto/States/enemy_chase.gd" type="Script" id=6]
-[ext_resource path="res://Enemy/Robocto/enemy_attack.gd" type="Script" id=7]
+[ext_resource path="res://Enemy/Robocto/States/enemy_attack.gd" type="Script" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.999
@@ -119,6 +119,7 @@ script = ExtResource( 1 )
 position = Vector2( 3.68828, -25.0848 )
 texture = ExtResource( 2 )
 hframes = 6
+frame = 1
 
 [node name="Hitbox" type="Area2D" parent="."]
 position = Vector2( 0, -18.4602 )
@@ -155,6 +156,7 @@ script = ExtResource( 5 )
 
 [node name="Chase" type="Node" parent="States"]
 script = ExtResource( 6 )
+speed = 100.0
 
 [node name="Attack" type="Node" parent="States"]
 script = ExtResource( 7 )
