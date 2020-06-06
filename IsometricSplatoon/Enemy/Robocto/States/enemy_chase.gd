@@ -13,7 +13,11 @@ func enter(host: Enemy):
 #	return
 
 func update(host:Enemy, delta):
-	#use host.navigation to get and follow a path
+	#if near a player, pop up an attack state
+	if host.playerInRange:
+		host._add_state('attack')
+	else:
+		host.moveTowards(host.player.position, delta)
 	
 	if !host.playerDetected:
 		return 'idle'

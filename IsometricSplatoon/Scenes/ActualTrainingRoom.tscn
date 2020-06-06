@@ -68,9 +68,9 @@ tracks/1/keys = {
 }
 
 [sub_resource type="NavigationPolygon" id=3]
-vertices = PoolVector2Array( 880, 32, 880, 544, 128, 544, 128, 32 )
+vertices = PoolVector2Array( 856, 56, 856, 520, 152, 520, 152, 56 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
-outlines = [ PoolVector2Array( 128, 32, 128, 544, 880, 544, 880, 32 ) ]
+outlines = [ PoolVector2Array( 152, 56, 152, 520, 856, 520, 856, 56 ) ]
 
 [node name="Game" type="Node"]
 __meta__ = {
