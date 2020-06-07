@@ -1,7 +1,10 @@
 extends Node2D
 class_name Enemy
 
+signal state_changed( states_stack )
 
+var bullet = preload("res://Enemy/enemy_bullet.tscn")
+var timedInkSplat = preload("res://Player/Temp/Weapon/TimedSplat.tscn")
 
 #external node refs
 onready var navigation = get_node("/root/Game/Navigation2D")
@@ -10,7 +13,7 @@ onready var inkManager = get_node( "/root/Game/InkManager")
 onready var animPlayer = $AnimationPlayer
 
 export var speed := 80
-var ground := GroundType.None
+var ground := GroundType.TheirInk
 
 #enemy behavior vars
 var player
@@ -84,6 +87,19 @@ func _add_state(state_name):
 	current_state = states_stack.front()
 	current_state.enter(self)
 	emit_signal('state_changed', states_stack )
+
+func dirToPlayer():
+	return position.direction_to(player.position).normalized()
+
+func shootStraightShot():
+	var aimDir = dirToPlayer()
+	var newBullet = bullet.instance()
+	newBullet.setUpBullet( 30, 240, 3, aimDir)
+	get_node("/root/Game/Entities").add_child(newBullet)
+	newBullet.position = position + aimDir * 5
+
+func internalFailure():
+	pass
 
 func takeDamage(dmgAmount):
 	#particle effect!

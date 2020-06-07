@@ -10,6 +10,7 @@ onready var inkImages = [
 		0, #none
 		inkGridImage, #"ground" image
 		inkImage, #ink image
+		
 	]
 var inkSquareSize = 8
 
