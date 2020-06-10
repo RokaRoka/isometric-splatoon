@@ -19,7 +19,7 @@ var ground := GroundType.TheirInk
 var player
 var detectionRangeSqd = 512
 var playerDetected := false
-var attackRangeSqd := 128
+var attackRangeSqd := 164
 var playerInRange := false
 
 #state vars
@@ -32,7 +32,7 @@ onready var states_map = {
 }
 
 
-var health = 175
+var health = 300
 
 func _ready():
 	$AnimationPlayer.play("idle")
@@ -91,32 +91,32 @@ func _add_state(state_name):
 func dirToPlayer():
 	return position.direction_to(player.position).normalized()
 
-func shootStraightShot():
+func shootStraightShot(var shotCount = 1, var maxShotCount = 3):
 	var aimDir = dirToPlayer()
 	var newBullet = bullet.instance()
-	newBullet.setUpBullet( 30, 240, 3, aimDir)
+	newBullet.setUpBullet( 30, 200, 1, aimDir)
 	get_node("/root/Game/Entities").add_child(newBullet)
 	newBullet.position = position + aimDir * 5
+	
+	var newTimedInkSplat = timedInkSplat.instance()
+	get_node("/root/Game").add_child(newTimedInkSplat)
+	newTimedInkSplat.assignRandomSplat(global_position + (aimDir * (200 * shotCount/maxShotCount)), 1, 1, GroundType.TheirInk)
 
 func internalFailure():
 	pass
 
 func takeDamage(dmgAmount):
 	#particle effect!
-#	$HitParticle.restart()
-#	$HitParticle.emitting = true
-#	
+	$HitParticle.restart()
+	$HitParticle.emitting = true
 	#sound
 #	$AudioStreamPlayer.PlayAudio("hit")
-	
 	#damage
 	health -= dmgAmount
 	if health <= 0:
 		$Hitbox.monitoring = false
 		$Hitbox.monitorable = false
 		queue_free()
-#		$AnimationPlayer.play("pop")
-#		emit_signal("popped")
 
 func _on_body_entered(body):
 	if body.is_in_group("bullet"):

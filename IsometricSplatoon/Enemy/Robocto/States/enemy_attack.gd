@@ -20,7 +20,7 @@ func update(host: Enemy, delta):
 	if attackDone:
 		return 'previous'
 	if attackQueue:
-		host.shootStraightShot()
+		host.shootStraightShot(attackCount, shotsFired)
 		attackQueue = false
 
 func exit(host):

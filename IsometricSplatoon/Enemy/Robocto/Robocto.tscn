@@ -160,8 +160,9 @@ speed = 100.0
 
 [node name="Attack" type="Node" parent="States"]
 script = ExtResource( 7 )
+shotsFired = 5
 
 [node name="AttackTimer" type="Timer" parent="States/Attack"]
-wait_time = 0.35
+wait_time = 0.2
 [connection signal="body_entered" from="Hitbox" to="." method="_on_body_entered"]
 [connection signal="timeout" from="States/Attack/AttackTimer" to="States/Attack" method="attackTimerTimeOut"]
