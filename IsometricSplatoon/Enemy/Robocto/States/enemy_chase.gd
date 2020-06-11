@@ -10,12 +10,6 @@ func enter(host: Enemy):
 	print("enter enemy chase")
 	host.animPlayer.play("walk")
 
-#func exit(host):
-#	return
-
-#func handle_input(host, event):
-#	return
-
 func update(host:Enemy, delta):
 	#if near a player, pop up an attack state
 	if host.playerInRange:

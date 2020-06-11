@@ -28,7 +28,8 @@ var current_state = null
 onready var states_map = {
 	'idle': $States/Idle,
 	'chase': $States/Chase,
-	'attack': $States/Attack
+	'attack': $States/Attack,
+	'back_up': $States/BackUp
 }
 
 

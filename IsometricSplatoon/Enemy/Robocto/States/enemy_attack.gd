@@ -4,9 +4,10 @@ extends State
 # The enemy fires an attack at the player. Once the enemy fires 2-4 shots,
 # The enemy returns to the prev state
 
-var attackCount = 0
 var attackDone = false
 var attackQueue = false
+
+var attackCount = 0
 export var shotsFired = 3
 
 func enter(host: Enemy):
@@ -18,7 +19,7 @@ func enter(host: Enemy):
 
 func update(host: Enemy, delta):
 	if attackDone:
-		return 'previous'
+		return 'back_up'
 	if attackQueue:
 		host.shootStraightShot(attackCount, shotsFired)
 		attackQueue = false
