@@ -826,7 +826,7 @@ script = ExtResource( 12 )
 [node name="Kid_Run" type="Node" parent="States"]
 script = ExtResource( 13 )
 runSpeed = 50.0
-runMaxSpeed = 120.0
+runMaxSpeed = 90.0
 
 [node name="Squid_Idle" type="Node" parent="States"]
 script = ExtResource( 14 )
@@ -835,7 +835,7 @@ script = ExtResource( 14 )
 script = ExtResource( 15 )
 swimSpeed = 50.0
 swimMaxSpeed = 250.0
-slowMaxSpeed = 80.0
+slowMaxSpeed = 70.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 16 )
