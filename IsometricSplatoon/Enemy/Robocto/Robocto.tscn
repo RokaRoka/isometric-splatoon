@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Enemy/Enemy.gd" type="Script" id=1]
 [ext_resource path="res://Enemy/Robocto/robocoto-Sheet.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Enemy/Robocto/States/enemy_chase.gd" type="Script" id=6]
 [ext_resource path="res://Enemy/Robocto/States/enemy_attack.gd" type="Script" id=7]
 [ext_resource path="res://Enemy/Robocto/States/enemy_backup.gd" type="Script" id=8]
+[ext_resource path="res://Enemy/Robocto/robocto_barf.gd" type="Script" id=9]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 12.999
@@ -172,6 +173,13 @@ speed = 100.0
 
 [node name="Timer" type="Timer" parent="States/BackUp"]
 wait_time = 1.5
+
+[node name="Attack2" type="Node" parent="States"]
+script = ExtResource( 9 )
+
+[node name="FinishTimer" type="Timer" parent="States/Attack2"]
+wait_time = 2.0
 [connection signal="body_entered" from="Hitbox" to="." method="_on_body_entered"]
 [connection signal="timeout" from="States/Attack/AttackTimer" to="States/Attack" method="attackTimerTimeOut"]
 [connection signal="timeout" from="States/BackUp/Timer" to="States/BackUp" method="_on_Timer_timeout"]
+[connection signal="timeout" from="States/Attack2/FinishTimer" to="States/Attack2" method="attackTimerTimeOut"]

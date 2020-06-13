@@ -29,7 +29,8 @@ onready var states_map = {
 	'idle': $States/Idle,
 	'chase': $States/Chase,
 	'attack': $States/Attack,
-	'back_up': $States/BackUp
+	'back_up': $States/BackUp,
+	'attack2': $States/Attack2
 }
 
 
@@ -103,8 +104,15 @@ func shootStraightShot(var shotCount = 1, var maxShotCount = 3):
 	get_node("/root/Game").add_child(newTimedInkSplat)
 	newTimedInkSplat.assignRandomSplat(global_position + (aimDir * (200 * shotCount/maxShotCount)), 1, 1, GroundType.TheirInk)
 
-func internalFailure():
-	pass
+func internalFailure(var time = 3):
+	var newBullet = bullet.instance()
+	newBullet.setUpBullet( 80, 20, time, Vector2.DOWN * 32)
+	get_node("/root/Game/Entities").add_child(newBullet)
+	newBullet.position = global_position
+	
+	var newTimedInkSplat = timedInkSplat.instance()
+	get_node("/root/Game").add_child(newTimedInkSplat)
+	newTimedInkSplat.assignRandomSplat(global_position, .25, time, GroundType.TheirInk)
 
 func takeDamage(dmgAmount):
 	#particle effect!
