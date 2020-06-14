@@ -9,10 +9,11 @@
 [ext_resource path="res://Player/UI/recoverink.png" type="Texture" id=7]
 [ext_resource path="res://BalloonTrial/BalloonTrialUI.gd" type="Script" id=8]
 [ext_resource path="res://Player/Temp/TempPlayer.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=10]
+[ext_resource path="res://Ink/InkManager.gd" type="Script" id=10]
 [ext_resource path="res://Ink/ink_grid.png" type="Texture" id=11]
 [ext_resource path="res://Ink/ink_temp.png" type="Texture" id=12]
 [ext_resource path="res://BalloonTrial/Map/BalloonArenaTileSet.tres" type="TileSet" id=13]
+
 
 [sub_resource type="Animation" id=1]
 resource_name = "ink_recover"

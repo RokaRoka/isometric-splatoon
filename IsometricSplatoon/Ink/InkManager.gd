@@ -3,15 +3,19 @@ extends Node2D
 #ref to boundaries
 onready var boundaries = get_node("/root/Game/Boundaries")
 
+enum GroundType {
+	NONE,
+	GROUND,
+	MY_INK,
+	THEIR_INK
+}
+
 #ink square data
-onready var inkImage = get_node( "ResourcePreloader" ).get_resource( "ink_temp")
-onready var inkEnemyImage = $ResourcePreloader.get_resource("ink_enemy_temp")
-onready var inkGridImage = get_node( "ResourcePreloader" ).get_resource( "ink_grid")
 onready var inkImages = [
 		0, #none
-		inkGridImage, #"ground" image
-		inkImage, #ink image
-		inkEnemyImage #enemy ink image
+		preload("ink_grid.png"), #"ground" image
+		preload("ink_temp.png"), #ink image
+		preload("ink_enemy_temp.png") #enemy ink image
 	]
 var inkSquareSize = 8
 
@@ -21,8 +25,8 @@ var inkGridWidth = 0
 var inkGridHeight = 0
 
 #mouse painting data
-export (bool) var mousePaintingAllowed = false
-export (int) var brushsize = 1
+var mousePaintingAllowed = false
+var brushsize = 3
 var painting = false
 var lastMousePosition = Vector2()
 
@@ -36,7 +40,8 @@ func _ready():
 				width = point.x
 			if point.y > height:
 				height = point.y
-	
+		
+		position = boundaries.position
 		inkGridWidth = width/inkSquareSize
 		inkGridHeight = height/inkSquareSize
 	
@@ -46,7 +51,7 @@ func _ready():
 		inkGrid[i] = []
 		inkGrid[i].resize( inkGridWidth ) #make the ink grid rows 100 wide
 		for j in inkGridWidth:
-			inkGrid[i][j] = GroundType.Ground
+			inkGrid[i][j] = GroundType.GROUND
 	
 	#testing stuff
 	#inkSplat( GroundType.MyInk, Vector2(32, 32), 2)
@@ -65,7 +70,7 @@ func _input(event):
 				if brushsize > 1:
 					for c in brushsize:
 						for r in brushsize:
-							paintPosition( GroundType.MyInk, event.global_position + Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
+							paintPosition( GroundType.MyInk, event.global_position + Vector2(c * inkImages[1].get_width(), r * inkImages[1].get_height()) )
 							#inkArrayPos = positionToInkArrayIndex( event.global_position + Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
 							#inkGrid[inkArrayPos.y][inkArrayPos.x] = GroundType.MyInk
 				else:
@@ -129,7 +134,7 @@ func _draw():
 	for row in inkGrid:
 		for inkSquareNum in row:
 			if inkSquareNum > 0:
-				draw_texture( inkImages[inkSquareNum], Vector2(c * inkImage.get_width(), r * inkImage.get_height()) )
+				draw_texture( inkImages[inkSquareNum], Vector2(c * inkImages[1].get_width(), r * inkImages[1].get_height()) )
 			c += 1
 		c = 0
 		r += 1
@@ -140,10 +145,10 @@ func _draw():
 			draw_rect( Rect2( snapPos - Vector2(1, 1), Vector2((inkSquareSize * brushsize) + 2, (inkSquareSize * brushsize) + 2)), Color(0, 0, 0) )
 			for c in brushsize:
 				for r in brushsize:
-					draw_texture( inkImage, snapPos + Vector2(inkSquareSize * r, inkSquareSize * c))
+					draw_texture( inkImages[1], snapPos + Vector2(inkSquareSize * r, inkSquareSize * c))
 		else:
 			draw_rect( Rect2( snapPos - Vector2(1, 1), Vector2((inkSquareSize * brushsize) + 2, (inkSquareSize * brushsize) + 2)), Color(0, 0, 0) )
-			draw_texture( inkImage, snapPos )
+			draw_texture( inkImages[1], snapPos )
 
 func paintPosition(groundType, target_position):
 	var index = positionToInkArrayIndex(target_position)

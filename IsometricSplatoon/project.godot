@@ -32,8 +32,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GroundType="*res://General/Scripts/GroundType.gd"
 dir="*res://General/Scripts/direction.gd"
+InkManager="*res://Ink/InkManager.gd"
 
 [importer_defaults]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Enemy/Robocto/Robocto.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/UI/noink.png" type="Texture" id=2]
@@ -7,10 +7,6 @@
 [ext_resource path="res://Player/UI/inktank_full.png" type="Texture" id=5]
 [ext_resource path="res://General/UI/panel.png" type="Texture" id=6]
 [ext_resource path="res://Player/UI/InkTankUI.gd" type="Script" id=7]
-[ext_resource path="res://Ink/ink_enemy_temp.png" type="Texture" id=8]
-[ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=9]
-[ext_resource path="res://Ink/ink_grid.png" type="Texture" id=10]
-[ext_resource path="res://Ink/ink_temp.png" type="Texture" id=11]
 [ext_resource path="res://Player/Temp/TempPlayer.tscn" type="PackedScene" id=13]
 
 [sub_resource type="Animation" id=1]
@@ -167,18 +163,6 @@ position = Vector2( 674.943, 201.418 )
 [node name="Player" parent="Entities" instance=ExtResource( 13 )]
 position = Vector2( 240, 208 )
 mouseControl = true
-
-[node name="InkManager" type="Node2D" parent="."]
-position = Vector2( 128, 32 )
-z_index = -1
-script = ExtResource( 9 )
-__meta__ = {
-"_edit_lock_": true
-}
-brushsize = 4
-
-[node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager"]
-resources = [ PoolStringArray( "ink_enemy_temp", "ink_grid", "ink_temp" ), [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ] ]
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 position = Vector2( 128, 32 )

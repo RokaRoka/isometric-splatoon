@@ -13,7 +13,7 @@ func _physics_process(delta):
 	t += delta
 	if t >= lifeTime:
 		#print('I am a bullet and I am dead!!! t is: '+String(t)+' lifetime: '+String(lifeTime))
-		get_node( "/root/Game/InkManager" ).inkSplat(GroundType.MyInk, global_position, 2)
+		InkManager.inkSplat(InkManager.GroundType.MY_INK, global_position, 2)
 		queue_free()
 
 

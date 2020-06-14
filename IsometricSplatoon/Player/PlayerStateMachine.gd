@@ -5,9 +5,6 @@ signal ink_use(ink_left)
 signal ink_recover(ink_left)
 signal ink_fail
 
-#external node refs
-onready var inkManager = get_node( "/root/Game/InkManager")
-
 #node refs
 onready var animPlayer = get_node( "AnimationPlayer" )
 onready var weapon = get_node("Weapon")
@@ -24,7 +21,7 @@ var deadZone  = 0.2
 var inputDir = Vector2()
 var velocity  = Vector2()
 var lastAnimDir = "down"
-var ground = GroundType.None
+var ground = InkManager.GroundType.NONE
 var canFire = false
 
 
@@ -141,13 +138,13 @@ func GetAnimDirection():
 
 
 func GetGroundType():
-	return inkManager.getGroundTypeAtPosition( global_position )
+	return InkManager.getGroundTypeAtPosition( global_position )
 
 func CheckForMyInk():
-	return ground == GroundType.MyInk
+	return ground == InkManager.GroundType.MY_INK
 
 func CheckForTheirInk():
-	return ground == GroundType.TheirInk
+	return ground == InkManager.GroundType.THEIR_INK
 
 func TryUseInk(amount):
 	inkRecoverRestartCount = 0.0

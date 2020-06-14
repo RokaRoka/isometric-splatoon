@@ -8,12 +8,13 @@ var timedInkSplat = preload("res://Player/Temp/Weapon/TimedSplat.tscn")
 
 #external node refs
 onready var navigation = get_node("/root/Game/Navigation2D")
-onready var inkManager = get_node( "/root/Game/InkManager")
 
 onready var animPlayer = $AnimationPlayer
 
 export var speed := 80
-var ground := GroundType.TheirInk
+var ground = InkManager.GroundType.NONE
+
+var inkFireType = InkManager.GroundType.THEIR_INK
 
 #enemy behavior vars
 var player
@@ -102,7 +103,7 @@ func shootStraightShot(var shotCount = 1, var maxShotCount = 3):
 	
 	var newTimedInkSplat = timedInkSplat.instance()
 	get_node("/root/Game").add_child(newTimedInkSplat)
-	newTimedInkSplat.assignRandomSplat(global_position + (aimDir * (200 * shotCount/maxShotCount)), 1, 1, GroundType.TheirInk)
+	newTimedInkSplat.assignRandomSplat(global_position + (aimDir * (200 * shotCount/maxShotCount)), 1, 1, inkFireType)
 
 func internalFailure(var time = 3):
 	var newBullet = bullet.instance()
@@ -113,7 +114,7 @@ func internalFailure(var time = 3):
 	
 	var newTimedInkSplat = timedInkSplat.instance()
 	get_node("/root/Game").add_child(newTimedInkSplat)
-	newTimedInkSplat.assignRandomSplat(global_position, time, 6, GroundType.TheirInk)
+	newTimedInkSplat.assignRandomSplat(global_position, time, 6, inkFireType)
 
 func takeDamage(dmgAmount):
 	#particle effect!
