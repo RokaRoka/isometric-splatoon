@@ -5,11 +5,13 @@ onready var boundaries = get_node("/root/Game/Boundaries")
 
 #ink square data
 onready var inkImage = get_node( "ResourcePreloader" ).get_resource( "ink_temp")
+onready var inkEnemyImage = $ResourcePreloader.get_resource("ink_enemy_temp")
 onready var inkGridImage = get_node( "ResourcePreloader" ).get_resource( "ink_grid")
 onready var inkImages = [
 		0, #none
 		inkGridImage, #"ground" image
 		inkImage, #ink image
+		inkEnemyImage #enemy ink image
 	]
 var inkSquareSize = 8
 

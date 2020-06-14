@@ -16,7 +16,7 @@ func enter(host):
 func handle_input(host, event):
 	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.is_action_released( "swim" ):
-			print("swim released!")
+			#print("swim released!")
 			return 'kid_run'
 	return .handle_input(host, event)
 

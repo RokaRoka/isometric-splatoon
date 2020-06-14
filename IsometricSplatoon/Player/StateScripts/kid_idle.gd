@@ -13,7 +13,7 @@ func enter(host):
 	host.animPlayer.play('move_'+host.lastAnimDir)
 	host.animPlayer.stop()
 	host.velocity = Vector2()
-	print("Entering idle")
+	#print("Entering idle")
 	return .enter(host)
 
 

@@ -1,11 +1,13 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://Enemy/Robocto/Robocto.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/UI/noink.png" type="Texture" id=2]
 [ext_resource path="res://Player/UI/inktank.png" type="Texture" id=3]
 [ext_resource path="res://Player/UI/recoverink.png" type="Texture" id=4]
 [ext_resource path="res://Player/UI/inktank_full.png" type="Texture" id=5]
 [ext_resource path="res://General/UI/panel.png" type="Texture" id=6]
 [ext_resource path="res://Player/UI/InkTankUI.gd" type="Script" id=7]
+[ext_resource path="res://Ink/ink_enemy_temp.png" type="Texture" id=8]
 [ext_resource path="res://Ink/MapInkManager.gd" type="Script" id=9]
 [ext_resource path="res://Ink/ink_grid.png" type="Texture" id=10]
 [ext_resource path="res://Ink/ink_temp.png" type="Texture" id=11]
@@ -65,6 +67,11 @@ tracks/1/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
+
+[sub_resource type="NavigationPolygon" id=3]
+vertices = PoolVector2Array( 856, 56, 856, 520, 152, 520, 152, 56 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
+outlines = [ PoolVector2Array( 152, 56, 152, 520, 856, 520, 856, 56 ) ]
 
 [node name="Game" type="Node"]
 __meta__ = {
@@ -154,6 +161,9 @@ wait_time = 0.75
 
 [node name="Entities" type="YSort" parent="."]
 
+[node name="Robocto" parent="Entities" instance=ExtResource( 1 )]
+position = Vector2( 674.943, 201.418 )
+
 [node name="Player" parent="Entities" instance=ExtResource( 13 )]
 position = Vector2( 240, 208 )
 mouseControl = true
@@ -168,7 +178,7 @@ __meta__ = {
 brushsize = 4
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager"]
-resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 10 ), ExtResource( 11 ) ] ]
+resources = [ PoolStringArray( "ink_enemy_temp", "ink_grid", "ink_temp" ), [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 11 ) ] ]
 
 [node name="Boundaries" type="StaticBody2D" parent="."]
 position = Vector2( 128, 32 )
@@ -177,6 +187,12 @@ position = Vector2( 128, 32 )
 visible = false
 build_mode = 1
 polygon = PoolVector2Array( 0, 0, 752, 0, 752, 512, 0, 512 )
+
+[node name="Navigation2D" type="Navigation2D" parent="."]
+
+[node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
+navpoly = SubResource( 3 )
 [connection signal="timeout" from="UI/InkTankUI/FadeTimer" to="UI/InkTankUI" method="_on_FadeTimer_timeout"]
 [connection signal="ink_fail" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
 [connection signal="ink_recover" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]

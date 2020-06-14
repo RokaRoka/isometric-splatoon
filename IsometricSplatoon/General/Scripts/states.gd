@@ -1,4 +1,5 @@
 extends Node
+class_name State
 
 func enter(host):
 	return

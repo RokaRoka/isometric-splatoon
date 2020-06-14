@@ -8,7 +8,7 @@ func enter(host):
 		print('current anim: '+host.animPlayer.current_animation)
 	host.animPlayer.stop()
 	host.velocity = Vector2()
-	print("Entering squid idle")
+	#print("Entering squid idle")
 	return .enter(host)
 
 
@@ -19,7 +19,7 @@ func enter(host):
 func handle_input(host, event):
 	if event is InputEventKey or event is InputEventJoypadButton:
 		if event.is_action_released( "swim" ):
-			print("squid idle released!")
+			#print("squid idle released!")
 			return 'kid_idle'
 	return .handle_input(host, event)
 
