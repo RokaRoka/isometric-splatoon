@@ -13,7 +13,11 @@ func enter(host: Enemy):
 func update(host:Enemy, delta):
 	#if near a player, pop up an attack state
 	if host.playerInRange:
-		host._add_state('attack')
+		var randNum = randi() % 3
+		if randNum > 1:
+			host._add_state('attack')
+		else:
+			host._add_state('attack2')
 	else:
 		host.moveTowards(host.player.position, speed, delta)
 	

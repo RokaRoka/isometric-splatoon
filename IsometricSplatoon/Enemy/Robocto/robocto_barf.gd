@@ -24,7 +24,8 @@ func exit(host):
 	$FinishTimer.stop()
 
 func animationDone(anim_name):
-	if anim_name == "attack":
+	if anim_name == "barf":
+		attackQueue = true
 		$FinishTimer.start()
 
 func attackTimerTimeOut():

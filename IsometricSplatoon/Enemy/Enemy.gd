@@ -106,13 +106,13 @@ func shootStraightShot(var shotCount = 1, var maxShotCount = 3):
 
 func internalFailure(var time = 3):
 	var newBullet = bullet.instance()
-	newBullet.setUpBullet( 80, 20, time, Vector2.DOWN * 32)
+	newBullet.setUpBullet( 80, 20, time, Vector2.DOWN)
 	get_node("/root/Game/Entities").add_child(newBullet)
-	newBullet.position = global_position
+	newBullet.position = global_position + Vector2.UP * 16
 	
 	var newTimedInkSplat = timedInkSplat.instance()
 	get_node("/root/Game").add_child(newTimedInkSplat)
-	newTimedInkSplat.assignRandomSplat(global_position, .25, time, GroundType.TheirInk)
+	newTimedInkSplat.assignRandomSplat(global_position, time, 3, GroundType.TheirInk)
 
 func takeDamage(dmgAmount):
 	#particle effect!
