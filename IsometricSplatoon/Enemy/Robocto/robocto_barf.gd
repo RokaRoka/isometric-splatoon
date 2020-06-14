@@ -17,7 +17,7 @@ func update(host: Enemy, delta):
 	if attackDone:
 		return 'back_up'
 	if attackQueue:
-		host.internalFailure(2)
+		host.internalFailure(1)
 		attackQueue = false
 
 func exit(host):

@@ -178,7 +178,6 @@ wait_time = 1.5
 script = ExtResource( 9 )
 
 [node name="FinishTimer" type="Timer" parent="States/Attack2"]
-wait_time = 2.0
 [connection signal="body_entered" from="Hitbox" to="." method="_on_body_entered"]
 [connection signal="timeout" from="States/Attack/AttackTimer" to="States/Attack" method="attackTimerTimeOut"]
 [connection signal="timeout" from="States/BackUp/Timer" to="States/BackUp" method="_on_Timer_timeout"]
