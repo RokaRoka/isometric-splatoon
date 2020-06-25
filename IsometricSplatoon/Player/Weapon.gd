@@ -36,17 +36,16 @@ func _ready():
 
 func _input(event):
 	#aim the mouse with keyboard debugging
-	if event is InputEventMouseMotion and player.keyboardControl:
-		if event.relative.length_squared() > 2:
-			#var mouseDist = (event.position - player.position).length()
-			#currentWeaponRange = clamp(mouseDist, minWeaponRange, maxWeaponRange)
-			var aimDistance = (event.position - player.position)
-			#print("Aim dist is: "+str(aimDistance))
-			#print("Aim length is: "+str(aimDistance.length()))
-			if aimDistance.length()/maxWeaponRange < 1:
-				bufferedAimInput = aimDistance/maxWeaponRange
-			else:
-				bufferedAimInput = aimDistance
+	if player.keyboardControl:
+		if event is InputEventMouseMotion:
+			if event.relative.length_squared() > 2:
+				#var mouseDist = (event.position - player.position).length()
+				#currentWeaponRange = clamp(mouseDist, minWeaponRange, maxWeaponRange)
+				var mouseToWorld = get_viewport_transform().xform_inv(event.position)
+				var aimDir = (mouseToWorld - player.position).normalized()
+				print("Aim dir is: "+str(aimDir))
+				#print("Aim length is: "+str(aimDir.length()))
+				bufferedAimInput = aimDir
 	elif event is InputEventJoypadMotion and event.is_action("aim"):
 		if event.axis == JOY_AXIS_2: #and abs(event.axis_value) > player.deadZone:
 			bufferedAimInput.x = event.axis_value
