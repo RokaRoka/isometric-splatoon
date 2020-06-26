@@ -9,3 +9,6 @@ export_presets.cfg
 
 # Builds
 Builds/
+
+# Windows things
+desktop.ini

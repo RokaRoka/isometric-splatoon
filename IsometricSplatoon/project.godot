@@ -27,13 +27,17 @@ _global_script_class_icons={
 [application]
 
 config/name="IsometricSplatoon"
-run/main_scene="res://Scenes/TrainingRoom.tscn"
+run/main_scene="res://Menus/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 dir="*res://General/Scripts/direction.gd"
 InkManager="*res://Ink/InkManager.gd"
+
+[display]
+
+window/size/resizable=false
 
 [importer_defaults]
 

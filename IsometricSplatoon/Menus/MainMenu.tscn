@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://External/hf-gold-complete/ruler-gold-v1/RulerGold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://External/hf-gold-complete/compass-gold-v1/CompassGold.otf" type="DynamicFontData" id=2]
+[ext_resource path="res://Enemy/Robocto/robocoto-Sheet.png" type="Texture" id=3]
+[ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -16,17 +18,19 @@ font_data = ExtResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_horizontal_guides_": [  ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 512.0 ]
 }
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -1.62903
-margin_top = -0.814514
-margin_right = -1.62903
-margin_bottom = -0.814514
 color = Color( 0.729412, 0.729412, 0.729412, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
 
 [node name="Title" type="Label" parent="."]
 anchor_left = 0.5
@@ -53,7 +57,7 @@ text = "So here's the rundown: This test is about the feel of the player charact
 
 Play as much of the game until you are bored.
 
-Once you are done, I would appreciate if you took the time to fill out a form about the experience!"
+Once you are done, I would appreciate if you took the time to fill out a form about your experience playing!"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -72,81 +76,100 @@ __meta__ = {
 }
 
 [node name="Tips" type="Label" parent="."]
-margin_left = 430.0
-margin_top = 263.453
-margin_right = 580.0
-margin_bottom = 282.453
+margin_left = 436.0
+margin_top = 252.0
+margin_right = 586.0
+margin_bottom = 271.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Here are some tips"
+text = "Here are some tips:"
 align = 1
+uppercase = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Tip1" type="Label" parent="."]
-margin_left = 214.441
-margin_top = 354.03
-margin_right = 300.441
-margin_bottom = 373.03
+margin_left = 150.1
+margin_top = 280.0
+margin_right = 461.1
+margin_bottom = 311.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "This is You"
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tip2" type="Label" parent="."]
-margin_left = 399.852
-margin_top = 332.595
-margin_right = 619.852
-margin_bottom = 351.595
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "You can transform into this..."
-align = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tip2-5" type="Label" parent="."]
-margin_left = 396.423
-margin_top = 409.759
-margin_right = 616.423
-margin_bottom = 428.759
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "AND shoot this to travel in"
+text = "This is You (You may recognize him, 
+though he is very different in this game)"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Tip3" type="Label" parent="."]
-margin_left = 682.568
-margin_top = 354.03
-margin_right = 894.568
-margin_bottom = 373.03
+margin_left = 570.1
+margin_top = 280.0
+margin_right = 848.1
+margin_bottom = 299.0
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "You want to defeat this dork"
+text = "You are going to be fighting this dork"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="Tips2" type="Label" parent="."]
+margin_left = 187.0
+margin_top = 470.0
+margin_right = 838.0
+margin_bottom = 501.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "So, you might wanna know how to play. Don't worry! You'll learn the controls in game.
+It even has controller support! Feel free to plug in one and give it a try."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LesDoThis" type="Button" parent="."]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -68.5
+margin_left = -198.5
 margin_top = -80.0
-margin_right = 68.5
+margin_right = -12.5
 margin_bottom = -53.0
 custom_fonts/font = SubResource( 2 )
-text = "Let's do this"
+text = "Let's do this (Keyboard)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="LesDoThis2" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 10.5
+margin_top = -80.0
+margin_right = 199.5
+margin_bottom = -53.0
+custom_fonts/font = SubResource( 2 )
+text = "Let's do this (Controller)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 305.063, 376.658 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+vframes = 5
+hframes = 4
+frame = 4
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 717.363, 376.658 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 3 )
+hframes = 6
