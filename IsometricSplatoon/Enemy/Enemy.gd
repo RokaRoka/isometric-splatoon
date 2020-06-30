@@ -125,8 +125,7 @@ func takeDamage(dmgAmount):
 	#damage
 	health -= dmgAmount
 	if health <= 0:
-		$Hitbox.monitoring = false
-		$Hitbox.monitorable = false
+		$Hitbox/CollisionShape2D.disabled = true
 		queue_free()
 
 func _on_body_entered(body):
