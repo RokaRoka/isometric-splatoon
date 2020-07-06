@@ -43,7 +43,7 @@ func _input(event):
 				#currentWeaponRange = clamp(mouseDist, minWeaponRange, maxWeaponRange)
 				var mouseToWorld = get_viewport_transform().xform_inv(event.position)
 				var aimDir = (mouseToWorld - player.position).normalized()
-				print("Aim dir is: "+str(aimDir))
+				#print("Aim dir is: "+str(aimDir))
 				#print("Aim length is: "+str(aimDir.length()))
 				bufferedAimInput = aimDir
 	elif event is InputEventJoypadMotion and event.is_action("aim"):
