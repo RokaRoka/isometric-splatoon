@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mouserelease1.ogg-18a5430bd57b49a6c9a348d166800f29.oggstr"
+
+[deps]
+
+source_file="res://External/Kenney/Audio/UI sounds (50 sounds)/mouserelease1.ogg"
+dest_files=[ "res://.import/mouserelease1.ogg-18a5430bd57b49a6c9a348d166800f29.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,18 +1,18 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://External/hf-gold-complete/ruler-gold-v1/RulerGold.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://External/hf-gold-complete/compass-gold-v1/CompassGold.otf" type="DynamicFontData" id=2]
-[ext_resource path="res://Enemy/Robocto/robocoto-Sheet.png" type="Texture" id=3]
-[ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=4]
+[ext_resource path="res://External/hf-gold-complete/compass-gold-v1/CompassGold.otf" type="DynamicFontData" id=1]
+[ext_resource path="res://External/hf-gold-complete/ruler-gold-v1/RulerGold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Player/Temp/temp_player.png" type="Texture" id=3]
+[ext_resource path="res://Enemy/Robocto/robocoto-Sheet.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
 outline_size = 2
 outline_color = Color( 0.839216, 0.941176, 1, 1 )
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
-font_data = ExtResource( 1 )
+font_data = ExtResource( 2 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -163,7 +163,7 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 305.063, 376.658 )
 scale = Vector2( 3, 3 )
-texture = ExtResource( 4 )
+texture = ExtResource( 3 )
 vframes = 5
 hframes = 4
 frame = 4
@@ -171,5 +171,5 @@ frame = 4
 [node name="Sprite2" type="Sprite" parent="."]
 position = Vector2( 717.363, 376.658 )
 scale = Vector2( 2, 2 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 hframes = 6
