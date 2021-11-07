@@ -14,8 +14,6 @@
 [ext_resource path="res://Ink/ink_temp.png" type="Texture" id=12]
 [ext_resource path="res://BalloonTrial/Map/BalloonArenaTileSet.tres" type="TileSet" id=13]
 
-
-
 [sub_resource type="Animation" id=1]
 resource_name = "ink_recover"
 length = 0.8
@@ -93,6 +91,9 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/InkTankUI"]
 anchor_right = 1.0
@@ -224,7 +225,6 @@ script = ExtResource( 10 )
 __meta__ = {
 "_edit_lock_": true
 }
-brushsize = 4
 
 [node name="ResourcePreloader" type="ResourcePreloader" parent="InkManager"]
 resources = [ PoolStringArray( "ink_grid", "ink_temp" ), [ ExtResource( 11 ), ExtResource( 12 ) ] ]
@@ -269,6 +269,7 @@ position = Vector2( 128, 32 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundaries"]
 build_mode = 1
 polygon = PoolVector2Array( 0, 0, 752, 0, 752, 512, 0, 512 )
+
 [connection signal="balloon_score_update" from="BalloonTrialManager" to="UI/BalloonTrialUI" method="_on_BalloonTrialManager_balloon_score_update"]
 [connection signal="timer_update" from="BalloonTrialManager" to="UI/BalloonTrialUI" method="_on_BalloonTrialManager_timer_update"]
 [connection signal="ink_fail" from="Entities/TempPlayer" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]

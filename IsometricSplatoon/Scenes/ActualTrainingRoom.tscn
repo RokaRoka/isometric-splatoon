@@ -188,6 +188,7 @@ polygon = PoolVector2Array( 0, 0, 752, 0, 752, 512, 0, 512 )
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 visible = false
 navpoly = SubResource( 3 )
+
 [connection signal="timeout" from="UI/InkTankUI/FadeTimer" to="UI/InkTankUI" method="_on_FadeTimer_timeout"]
 [connection signal="ink_fail" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_fail"]
 [connection signal="ink_recover" from="Entities/Player" to="UI/InkTankUI" method="_on_TempPlayer_ink_recover"]

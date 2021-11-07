@@ -1,6 +1,6 @@
 extends NinePatchRect
 
-onready var inkBar = $TextureProgress
+onready var inkBar = $MarginContainer/TextureProgress
 var player
 var offset = Vector2(-16, -24)
 #onready var noInk = $MarginContainer/NoInkTexture
@@ -10,12 +10,12 @@ func _ready():
 	hide()
 
 func _process(delta):
-	if visible:
-		rect_position = -(rect_size * rect_scale) + offset + get_viewport_transform().xform(player.position)
+	pass#if visible:
+#		rect_position = -(rect_size * rect_scale) + offset + get_viewport_transform().xform(player.position)
 
 func updateInkUI(ink_amount):
 	inkBar.value = (inkBar.max_value - inkBar.min_value) * ink_amount
-	$FadeTimer.start()
+	#$FadeTimer.start()
 	show()
 
 func _on_TempPlayer_ink_use(ink_left):
@@ -27,7 +27,7 @@ func _on_TempPlayer_ink_recover(ink_left):
 		$AnimationPlayer.play("ink_recover")
 
 func _on_TempPlayer_ink_fail():
-	$FadeTimer.start(1)
+	#$FadeTimer.start(1)
 	show()
 	$AnimationPlayer.play("no_ink")
 

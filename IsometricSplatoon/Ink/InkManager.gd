@@ -143,9 +143,9 @@ func _draw():
 		var snapPos = snapPositionToGrid( lastMousePosition )
 		if brushsize > 1:
 			draw_rect( Rect2( snapPos - Vector2(1, 1), Vector2((inkSquareSize * brushsize) + 2, (inkSquareSize * brushsize) + 2)), Color(0, 0, 0) )
-			for c in brushsize:
-				for r in brushsize:
-					draw_texture( inkImages[1], snapPos + Vector2(inkSquareSize * r, inkSquareSize * c))
+			for bc in brushsize:
+				for br in brushsize:
+					draw_texture( inkImages[1], snapPos + Vector2(inkSquareSize * br, inkSquareSize * bc))
 		else:
 			draw_rect( Rect2( snapPos - Vector2(1, 1), Vector2((inkSquareSize * brushsize) + 2, (inkSquareSize * brushsize) + 2)), Color(0, 0, 0) )
 			draw_texture( inkImages[1], snapPos )
